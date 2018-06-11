@@ -85,8 +85,8 @@ This creates a component skeleton within the `components/<your_domain>/<name>`
 directory, which we will leave untouched for this example. Note that the
 internal name this component will receive is
 `eslap://<your_domain>/component/<name>/0_0_1` (further details can be found in
-the https://github.com/kumori-systems/documentation[Building Services for the Kumori PaaS])
-document.
+the https://github.com/kumori-systems/documentation[Building Services for the Kumori PaaS]
+guide).
 
 We now need to build the component:
 
@@ -138,10 +138,4 @@ kumori deployment deploy <deployment_name>
 
 Which will return us an URL to browse the service we just deployed.
 
-https://github.com/kumori-systems/documentation[To learn more...]
-
-
-
-
-
-
+To learn more, continue reading the Quick Start guide you can find in https://github.com/kumori-systems/documentation[this same repo].
