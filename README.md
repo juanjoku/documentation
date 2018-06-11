@@ -1,5 +1,5 @@
-![Kumori Logo](assets/_kumori_logo_with_name_mini.png)
-![Kumori Logo](assets/_kumori_logo_with_name.png)
+![Kumori Logo](assets/_kumori_logo_with_name_mini.png?raw=true)
+![Kumori Logo](assets/_kumori_logo_with_name.png?raw=true)
 
 # Kumori PaaS Documentation
 
