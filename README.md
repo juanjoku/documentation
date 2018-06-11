@@ -1,4 +1,4 @@
-![Kumori Logo](assets/_kumori_logo_with_name_mini.png?raw=true)
+[![Kumori Logo](assets/_kumori_logo_with_name_mini.png?raw=true)](https://kumori.systems)
 
 # Kumori PaaS Documentation
 
@@ -16,8 +16,8 @@ and deploy your services on its platform.
 
 ## Description
 
-Several guides are available, from the very basic [Getting started]() to the
-in-depth description of the [Reference Guide]().
+Several guides are available, spanning from the very basic [Getting started](#getting-started-guide)
+to the detailed platform description given in the [Building Services Guide](#building-services-for-the-kumori-paas).
 
 Links to the different plaform services and tools are also included in this
 document.
@@ -31,15 +31,17 @@ document.
 * Tools
   * [`cli`](#kumori-cli)
 * [Dashboard](#kumori-dashboard)
+* [Further information](#further-information)
 * [License](#license)
+
 
 ## Getting started guide
 
 This is a super-quick demonstration of how to test our platform and deploy your
 first *Hello-World* application in less than 5 minutes.
 
-Download the guide as a [PDF file](01-getting-started/manual.pdf) or [view it
-online](01-getting-started/manual.adoc) and try it out!
+Download the guide as a [PDF file](01-getting-started/manual.pdf) or
+[view it online](01-getting-started/manual.adoc) and try it out!
 
 
 ## Quickstart guide
@@ -52,7 +54,7 @@ For sure, this is *not* a complete manual or a full reference guide of Kumori
 PaaS. In fact, what we will show you here is only a small part of the full
 potential of the platform.
 
-The guide is available [PDF file here](02-quickstart-guide/README.pdf).
+The guide is available [PDF file here](02-quickstart-guide/manual.pdf).
 
 
 ## Building Services for the Kumori PaaS
@@ -77,8 +79,13 @@ Check out its repo: https://github.com/kumori-systems/cli
 Kumori PaaS provides a Dashboard for users to deploy and monitor their services
 and manage their platform elements.
 
-Login to [Kumori Dashboard](https://dashboard.baco.kumori.systems) now.
+Login to [Kumori Dashboard](https://dashboard.baco.kumori.cloud) now.
 
+## Further information
+
+Feel free to drop us a line at info@kumori.systems if you would like to know
+more about Kumori Paas or need more information about any of the subjects
+described in the documentation.
 
 
 ## License
