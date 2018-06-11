@@ -63,7 +63,7 @@ discover all the features Kumori PaaS has to offer.
 Kumori CLI is the command line interface that will boost development of your
 components and services for Kumori PaaS.
 
-Check out its repo: **https://github.com/kumori-systems/cli**
+Check out the **npm** package: **https://github.com/kumori-systems/cli**
 
 
 ## Kumori Dashboard
