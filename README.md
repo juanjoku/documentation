@@ -2,8 +2,9 @@
 
 # Kumori PaaS Documentation
 
-This is a compendium of documentation on how to develop elements for Kumori Paas
-and deploy services on its platform.
+This a compendium of documentation to help you develop and deploy services for
+Kumori PaaS.
+
 
 ## Description
 
@@ -21,15 +22,14 @@ document.
 * [Building Services for the Kumori PaaS](#building-services-for-the-kumori-paas)
 * Tools
   * [`cli`](#kumori-cli)
-* [Dashboard](#kumori-dashboard)
+* [Kumori Dashboard](#kumori-dashboard)
 * [Further information](#further-information)
 * [License](#license)
 
 
 ## Getting started guide
-
-This is a super-quick demonstration of how to try our platform and deploy your
-first *Hello-World* application in less than 5 minutes.
+This super quick demonstration shows how a very simple *Hello-World* application
+can be deployed in Kumori PaaS in less than 5 minutes.
 
 Download the guide as a [**PDF file**](01-getting-started/manual.pdf) or
 [**view it online**](01-getting-started/manual.adoc) and try it out!
@@ -38,24 +38,25 @@ Download the guide as a [**PDF file**](01-getting-started/manual.pdf) or
 ## Quickstart guide
 
 The Quickstart guide describes the basic elements of Kumori PaaS, and guides the
-developer through the implementation and deployment of two example Node.js
+developer through the implementation and deployment of two Node.js example
 applications.
 
 For sure, this is not a complete manual or a full reference guide of Kumori
-PaaS. In fact, what we will show you here is only a small part of the full
-potential of the platform.
+PaaS. In fact, this document only shows a small part of the full potential of
+the platform.
 
-The guide is available [**PDF file here**](02-quickstart-guide/manual.pdf).
+The guide is available as a [**PDF file here**](02-quickstart-guide/manual.pdf).
 
 
 ## Building Services for the Kumori PaaS
 
-The reference guide for building components and services for the Kumori Paas.
+The reference guide for building components and services for the Kumori PaaS.
 This provides an in-depth view of the platform, including advanced features and
 more complex service examples.
 
 Download it as a [**PDF file**](03-building-services/manual.pdf), sit back and
 discover all the features Kumori PaaS has to offer.
+
 
 ## Kumori CLI
 
@@ -72,10 +73,11 @@ and manage their platform elements.
 
 Log in to [**Kumori Dashboard**](https://dashboard.baco.kumori.cloud) now.
 
+
 ## Further information
 
-Feel free to drop us a line at info@kumori.systems if you would like to know
-more about Kumori Paas or need more information about any of the subjects
+Feel free to drop us a line at **info@kumori.systems** if you would like to know
+more about Kumori PaaS or need more information about any of the subjects
 described in the documentation.
 
 
