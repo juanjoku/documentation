@@ -18,7 +18,7 @@ document.
 ## Table of Contents
 
 * [Getting started](#getting-started-guide)
-* [Quickstart guide](#quickstart-guide)
+* [Quick Start guide](#quick-start-guide)
 * [Building Services for the Kumori PaaS](#building-services-for-the-kumori-paas)
 * Tools
   * [`cli`](#kumori-cli)
@@ -35,10 +35,10 @@ Download the guide as a [**PDF file**](01-getting-started/manual.pdf) or
 [**view it online**](01-getting-started/manual.adoc) and try it out!
 
 
-## Quickstart guide
+## Quick Start guide
 
-The Quickstart guide describes the basic elements of Kumori PaaS, and guides the
-developer through the implementation and deployment of two Node.js example
+The Quick Start guide describes the basic elements of Kumori PaaS, and guides
+the developer through the implementation and deployment of two Node.js example
 applications.
 
 For sure, this is not a complete manual or a full reference guide of Kumori
@@ -63,7 +63,7 @@ discover all the features Kumori PaaS has to offer.
 Kumori CLI is the command line interface that will boost development of your
 components and services for Kumori PaaS.
 
-Check out the **npm** package: **https://github.com/kumori-systems/cli**
+Check out its repo: **https://github.com/kumori-systems/cli**
 
 
 ## Kumori Dashboard
@@ -72,6 +72,9 @@ Kumori PaaS provides a Dashboard for users to deploy and monitor their services
 and manage their platform elements.
 
 Log in to [**Kumori Dashboard**](https://dashboard.baco.kumori.cloud) now.
+
+Be advised that registration is required to use Kumori PaaS. Sign up for a free
+trial at **https://dicover.kumori.cloud**.
 
 
 ## Further information
