@@ -25,8 +25,6 @@ document.
 
 ## Table of Contents
 
-## Table of Contents
-
 * [Getting started](#getting-started-guide)
 * [Quickstart guide](#quickstart-guide)
 * [Building Services for the Kumori PaaS](#building-services-for-the-kumori-paas)
@@ -37,7 +35,12 @@ document.
 
 ## Getting started guide
 
-Install it as a npm package
+This is a super-quick demonstration of how to test our platform and deploy your
+first *Hello-World* application in less than 5 minutes.
+
+Download the guide as a [PDF file](01-getting-started/manual.pdf) or [view it
+online](01-getting-started/manual.adoc) and try it out!
+
 
 ## Quickstart guide
 
@@ -49,21 +52,33 @@ For sure, this is *not* a complete manual or a full reference guide of Kumori
 PaaS. In fact, what we will show you here is only a small part of the full
 potential of the platform.
 
-The guide is available in the [02-quickstart-guide directory](02-quickstart-guide/README.adoc)
-or can be downloaded as a [PDF file here](02-quickstart-guide/README.pdf).
+The guide is available [PDF file here](02-quickstart-guide/README.pdf).
 
 
 ## Building Services for the Kumori PaaS
 
+The reference guide for building components and services for the Kumori Paas.
+This provides an in-depth view of the platform, including advanced features and
+more complex service examples.
 
+Download it as a [PDF file](03-building-services/manual.pdf), sit back and
+discover all the features Kumori PaaS has to offer.
 
 ## Kumori CLI
 
-Install it as a npm package
+Kumori CLI is the command line interface that will boost development of your
+components and services for Kumori PaaS.
+
+Check out its repo: https://github.com/kumori-systems/cli
+
 
 ## Kumori Dashboard
 
-Install it as a npm package
+Kumori PaaS provides a Dashboard for users to deploy and monitor their services
+and manage their platform elements.
+
+Login to [Kumori Dashboard](https://dashboard.baco.kumori.systems) now.
+
 
 
 ## License
