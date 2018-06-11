@@ -74,7 +74,7 @@ and manage their platform elements.
 Log in to [**Kumori Dashboard**](https://dashboard.baco.kumori.cloud) now.
 
 Be advised that registration is required to use Kumori PaaS. Sign up for a free
-trial at **https://dicover.kumori.cloud**.
+trial at **https://discover.kumori.cloud**.
 
 
 ## Further information
