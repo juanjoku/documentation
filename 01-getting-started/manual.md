@@ -6,7 +6,7 @@ Building complex services is simple when following our service model. Our tools 
 
 ## A simple example
 
-Before working with Kumori PaaS you need to [sign up](https://discover.kumori.cloud) (if you have not done so already). 
+Before working with Kumori PaaS you need to [sign up](https://discover.kumori.cloud) (if you have not done so already).
 
 After signing up you will be able to interact with the platform and manage your services through its [Dashboard](https://dashboard.baco.kumori.cloud).
 
@@ -39,24 +39,28 @@ Initialize the project workspace:
 kumori init
 ```
 
-Kumori's naming scheme for services and components uses a domain name belonging to the user 
+Kumori's naming scheme for services and components uses a domain name belonging to the user
 to avoid name collisions. You should now configure that domain name with the CLI for your project:
 
 ```shell
 kumori set domain <your_domain>
-``` 
+```
 
-Now we are ready to start building our service. Our simple service will have just one component 
-(the web server). We offer a set of templates which you can use to quickly implement simple 
+Now we are ready to start building our service. Our simple service will have just one component
+(the web server). We offer a set of templates which you can use to quickly implement simple
 service patterns. We make use of one of them:
 
 ```shell
 kumori component add -t express <name>
 ```
 
-This creates a component skeleton within the `components/<your_domain>/<name>` directory, which we will leave untouched for this
-example. Note that the internal name this component will receive is
-`eslap://<your_domain>/component/<name>/0_0_1` (see the [manual](https://github.com/kumori-systems/documentation/tree/master/manual)).
+This creates a component skeleton within the `components/<your_domain>/<name>`
+directory, which we will leave untouched for thisexample. Note that the internal
+name this component will receive is `eslap://<your_domain>/component/<name>/0_0_1`
+(further details can be found in the
+[Building Services for the Kumori PaaS](https://github.com/kumori-systems/documentation)
+document.
+
 
 We now need to build the component:
 
@@ -72,8 +76,8 @@ We create a service application making use of another template:
 kumori service add -t hello-world <name>
 ```
 
-Note that, currently, we should use the same *<name>* for the service application, as we used for the 
-component. Future versions of the tool will provide more flexibility. Also note that the internal name 
+Note that, currently, we should use the same *<name>* for the service application, as we used for the
+component. Future versions of the tool will provide more flexibility. Also note that the internal name
 of the created service app is `eslap://<your_domain>/service/<name>/0_0_1`.
 
 We are ready to prepare the deployment. Run the following command:
@@ -82,7 +86,7 @@ We are ready to prepare the deployment. Run the following command:
 kumori deployment add <deployment_nickname> <name>
 ```
 
-Where `<deployment_nickname>` is an arbitrary name you give your deployment, and 
+Where `<deployment_nickname>` is an arbitrary name you give your deployment, and
 `<name>` is the name you gave your service application.
 
 Before we can actually deploy, we need to configure our workspace with a valid API access token.
