@@ -1,0 +1,4380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="author" content="Kumori &lt;info@kumori.systems&gt; v1.0.0., May 2018">
+<title>Building Services for the Kumori PaaS</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Building Services for the Kumori PaaS</h1>
+<div class="details">
+<span id="author" class="author">Kumori &lt;info@kumori.systems&gt; v1.0.0., May 2018</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document describes how to build service applications to be deployed on
+<strong><em>Kumori</em></strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-intro"><a class="anchor" href="#s-intro"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> is a Platform as a Service designed to
+manage the life cycle events of services deployed on it. The goal is to obtain
+elastic services adapting to varying running conditions with minimal effort and
+expense on the part of the service provider, letting it focus on the development
+of the service itself, without getting bogged down by the details of service
+management tasks.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong>'s approach is to guide service applications to fit a set of
+architectural patterns we refer to as the <strong><em><strong><em>Kumori</em></strong> service model.</em></strong></p>
+</div>
+<div class="paragraph">
+<p>In a nutshell, <strong><em>Kumori</em></strong> service model views a service application as a set of
+interconnected components, each one playing a different role within the service.
+Components contain both the code that implements their logic, as well as a
+description of how they can be connected to other components through their
+communication channels. Service applications contain descriptions of how its
+components are actually connected through connectors with particular
+semantics, as well as a description of how they can be connected to other
+service applications through their communication channels.</p>
+</div>
+<div class="paragraph">
+<p>The rest of the document is organized as follows. We start with an overview
+description of <strong><em>Kumori</em></strong>'s service model, including what a service is in <strong><em>Kumori</em></strong>
+and what its structure is.</p>
+</div>
+<div class="paragraph">
+<p>Afterwards we describe how to define a component structurally to fit within the
+service model, to continue with a description of how components are connected
+together into a topology describing the service application. The definition of
+service application connections is also introduced.</p>
+</div>
+<div class="paragraph">
+<p>Once we are done describing the structure of service applications and
+components, we continue with a description of the API <strong><em>Kumori</em></strong> exposes for
+component developers. In particular we present the life cycle events to be taken
+care of by the component&#8217;s code, to finally delve into the channel-related API.</p>
+</div>
+<div class="paragraph">
+<p>Appendices show details of the runtime environment in which
+component code will be run.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-services"><a class="anchor" href="#s-services"></a>2. Services and Service applications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <strong><em>Kumori</em></strong> model a Service is, typically, a long-running, stateful
+computation obtained as the result of executing a set of software components
+previously deployed within suitable computing environments, offering
+functionality accessible through some communication channel, and providing
+guarantees about how these functions are delivered.</p>
+</div>
+<div class="paragraph">
+<p>The long-running nature of services lead them to accrue "state" which must have
+some durability and consistency properties in order to satisfy the semantics of
+the functions they make available. This characteristic makes them difficult to
+manage except in the simplest situations.</p>
+</div>
+<div class="paragraph">
+<p>Many of today´s services use HTTP channels to be accessed, usually offering a
+mix of web page (HTML5) content serving (basic HTTP model), and request/reply
+REST calls initiated by client software (which more and more often resides
+within the downloaded HTML page)</p>
+</div>
+<div class="paragraph">
+<p>Simple services can be built as a three-layer application: the front-end takes
+care of interacting with clients of the service. A back-end takes on
+state-persistence duties, being often implemented with some sort of database
+technology.</p>
+</div>
+<div class="paragraph">
+<p>More complex systems require more sophistication in the form of a richer set of
+components interconnected forming a more complex topology, with each component
+specializing in particular tasks. What&#8217;s more, some of those components may
+already exists, needing only to be integrated into a wider solution.</p>
+</div>
+<div class="paragraph">
+<p>Service scalability has always been a main worry of designers of applications
+destined to become services. The worry focuses on the ability that the whole
+system has to adapt to load changes while fulfilling the guarantees of
+the service. A trivial form of adapting to higher loads is providing more
+powerful computing environments where the programs execute (more memory, cpu,
+faster drives,&#8230;&#8203;). This way of dealing with higher demands, known as <em>vertical
+scalability</em> has the inconvenient of not scaling itself: there is a
+technological limit on the amount of resources a particular executing program
+can receive from its environment.</p>
+</div>
+<div class="paragraph">
+<p>Scalable service design must, thus, take into account adapting to the load using
+another approach: replicating some of the components, using a technique referred
+to as <em>horizontal scalability</em>. While replication must be used to ultimately
+achieve scalability, applications using replication must be designed carefully
+to avoid the pitfalls of inconsistent state across different replicas of the
+same component.</p>
+</div>
+<div class="paragraph">
+<p>Finally, long-lived services must also deal with failures of its components.
+Failures are a fact of life on any system, computing systems included. Failures
+may produce total or partial loss of the state associated with the component
+that fails. The whole service must be able to deal with this situation, as
+failure of one component can also potentially affect established communication
+links and in-transit messages.</p>
+</div>
+<div class="paragraph">
+<p>The <strong><em>Kumori</em></strong> platform&#8217;s goal is to help service application designers to cope
+with the challenges of designing service applications to deploy them as scalable
+services capable of elastically adapting to the changing circumstances of their
+environment (load changes, failures, upgrades).</p>
+</div>
+<div class="sect2">
+<h3 id="s-services-model"><a class="anchor" href="#s-services-model"></a>2.1. The <strong><em>Kumori</em></strong> service model</h3>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong>'s high level definition of what a service is fits that given earlier
+on. Its service model includes a structural description of a service
+application, as well as the semantics of deployment.</p>
+</div>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong> we need to consider the following elements:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>Service Component</em> (a.k.a. Component)</dt>
+<dd>
+<p>An autonomously deployable piece of software, adhering to a
+particular life-cycle directed by <strong><em>Kumori</em></strong>.</p>
+</dd>
+<dt class="hdlist1">Role</dt>
+<dd>
+<p>A particular occurrence of a component within a <em>Service Application</em>, fulfilling a specific
+purpose.</p>
+</dd>
+<dt class="hdlist1">Channel</dt>
+<dd>
+<p>A communication pathway of various types associated to the definition of a
+component.</p>
+</dd>
+<dt class="hdlist1">Channel protocol</dt>
+<dd>
+<p>The protocol that runs through a channel.</p>
+</dd>
+<dt class="hdlist1">Configuration Resources</dt>
+<dd>
+<p>Resources, organized as a a list of named and typed entities, declared
+by <em>Service Component</em>'s and <em>Service Application</em>'s. Resources can carry data accessible by the code
+in components. Resources are intermediated by the platform, and may carry
+extra information to be used by the platform/runtimes.</p>
+</dd>
+<dt class="hdlist1">Configuration Parameters</dt>
+<dd>
+<p>Purely application-dependent "<code>data</code>" needed by components and the service
+application, organized as a list of named and typed entities, declared
+by <em>Service Component</em>s and <em>Service Application</em>s.</p>
+</dd>
+<dt class="hdlist1">Types</dt>
+<dd>
+<p>A description of the characteristics of the various elements used in <strong><em>Kumori</em></strong>
+(parameters, resources, runtimes, &#8230;&#8203;). Expressed as versioned URIs with
+a concrete structure.</p>
+</dd>
+<dt class="hdlist1">Runtime</dt>
+<dd>
+<p>Software stack expected by a component&#8217;s software to run.</p>
+</dd>
+<dt class="hdlist1"><em>Service Application</em></dt>
+<dd>
+<p>A <strong><em>Service Application</em></strong> is the specification of a set of <strong>Roles</strong>, each one implemented
+by a <em>Service Component</em>, related through a <em>Topology</em> linking those roles through the channels of
+their respective components by means of connectors.</p>
+</dd>
+<dt class="hdlist1"><em>Channel Connector</em> (a.k.a. Connector)</dt>
+<dd>
+<p>Service model elements joining channels from components within a
+<em>Service Application</em>. <strong><em>Kumori</em></strong> defines its own set of connectors with its channel-binding
+restrictions and semantics.</p>
+</dd>
+<dt class="hdlist1">Role Instance</dt>
+<dd>
+<p>The result of executing the component associated with a Role on top of the
+runtime that component requires.</p>
+</dd>
+<dt class="hdlist1">Service</dt>
+<dd>
+<p>The result of deploying a <em>Service Application</em>. This deployment typically involves the
+creation of several Roles Instances for each one of the roles declared in the
+service, configured according to their declared configuration, and the
+interconnection of their channels, according to the model of the service.</p>
+</dd>
+<dt class="hdlist1"><em>Topology</em></dt>
+<dd>
+<p>How <em>Service Component</em>s are wired together through channels and connectors.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In what follows we are going to discuss each one of those elements in detail.</p>
+</div>
+<div class="sect3">
+<h4 id="s-service-uris"><a class="anchor" href="#s-service-uris"></a>2.1.1. Identifying <strong><em>Kumori</em></strong> model elements</h4>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong>'s service model, many of the above elements must have a unique name
+identifying them. <strong><em>Kumori</em></strong> uses URIs as a means to specify unique identifiers
+for elements that must be uniquely named.</p>
+</div>
+<div class="paragraph">
+<p>All URIs used to globally identify elements of <strong><em>Kumori</em></strong> follow a similar
+structure, schematized as follows</p>
+</div>
+<div class="paragraph">
+<p><code>eslap://&lt;domain&gt;/&lt;elementtype&gt;/&lt;name&gt;/&lt;version&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>Where <code>&lt;elementtype&gt;</code> signals the kind of element being named. Currently
+<strong><em>Kumori</em></strong> requires unique id&#8217;s for the following elements</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>component</code></dt>
+<dd>
+<p>Used to name <em>Basic Component</em>s. See the <a href="#s-service-components">components</a> section.</p>
+</dd>
+<dt class="hdlist1"><code>service</code></dt>
+<dd>
+<p>Used to name <em>Service Application</em>s. See the <a href="#s-service-topology">Composing a <em>Service Application</em>: topology</a> section.</p>
+</dd>
+<dt class="hdlist1"><code>runtime</code></dt>
+<dd>
+<p>Used to name a runtime kind. See the <a href="#s-component-runtime">Component programming</a> section.</p>
+</dd>
+<dt class="hdlist1"><code>protocol</code></dt>
+<dd>
+<p>Used for protocol names. See the <a href="#s-service-channel-protocol">Channel protocol</a> section.</p>
+</dd>
+<dt class="hdlist1"><code>parameter</code></dt>
+<dd>
+<p>Used for parameter type names. See the <a href="#s-service-component-parameters">Configuration settings</a>
+section.</p>
+</dd>
+<dt class="hdlist1"><code>manifest</code></dt>
+<dd>
+<p>Used by <strong><em>Kumori</em></strong> itself to name each one of the manifest specifications
+it makes available for the rest of elements.</p>
+</dd>
+<dt class="hdlist1"><code>resource</code></dt>
+<dd>
+<p>Used for resource type names. See the <a href="#s-service-component-parameters">Configuration settings</a>
+section.</p>
+</dd>
+<dt class="hdlist1"><code>channel</code></dt>
+<dd>
+<p>Used for channel type names. See the <a href="#s-service-channels">Channels</a> section.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Next, <code>&lt;domain&gt;</code> must be a domain name belonging to the author of the component.
+The rest of the URI should uniquely identify the element within this domain.
+<code>&lt;name&gt;</code> is an arbitrarily deep path name. It works as the generic name of
+the element within its domain.</p>
+</div>
+<div class="paragraph">
+<p>Finally, <code>&lt;version&gt;</code>, specifies which variation of the element is being named.
+<code>&lt;version&gt;</code> is a triplet of integers following the semantic versioning
+conventions:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;version&gt; == &lt;Major&gt;_&lt;Minor&gt;_&lt;Revision&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;version&gt;</code> URI component is required as most elements will mutate in time
+and it is important to be able to capture the relationships between them to make
+policy decisions on upgrades.</p>
+</div>
+<div class="paragraph">
+<p>Thus, an example of a URI identifying a component would be:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>eslap://my.domain.com/component/maincomp/1_2_0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Elements are defined within manifests, <code>JSON</code> files following a structure like
+this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/&lt;elemnttype&gt;/&lt;version&gt;", <i class="conum" data-value="1"></i><b>(1)</b>
+  "name": "eslap://&lt;domainname&gt;/&lt;elementtype&gt;/&lt;elementname&gt;/&lt;version&gt;", <i class="conum" data-value="2"></i><b>(2)</b>
+  ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Specification version to be found in the manifest</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>ID of the element being defined.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There is a set of builtin elements provided by <strong><em>Kumori</em></strong> whose manifests are
+publicly available. Furthermore, some elements can be defined by <strong><em>Kumori</em></strong> users,
+notably, <em>Service Application</em>'s and <em>Basic Component</em>'s, but also other parameter types (derived from
+existing ones) as well as runtimes and protocols (also derived from existing
+ones). More about this in the appendices.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="s-service-components"><a class="anchor" href="#s-service-components"></a>2.2. Components: specifying microservices</h3>
+<div class="paragraph">
+<p>A component should be seen as an autonomously runnable executable. As such, out
+of a component it is possible to obtain many different running component
+instances. Each <em>Component Instance</em> runs in isolation of any other <em>Component Instance</em>, however, a
+component typically needs functionality it does not implement in order to carry
+out its function. We refer to such functionality as its <em>dependency set</em>.</p>
+</div>
+<div class="paragraph">
+<p>Also, a component is barely useful if it cannot offer functionality others can
+access. We refer to this functionality as the <em>provided function set</em>.
+Obtaining and providing functionality requires communication between components.
+Consequently, our model for components makes component instances capable, a
+priori, of communicating through <em>channels</em> of various characteristics.</p>
+</div>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong>, a <em>Service Component</em> is designed to be included within a <em>Service Application</em>, playing a <em>role</em>
+that makes it capable to interact with other included components in the service,
+each playing its own <em>role</em>. The main structural elements of a <em>Service Component</em> are thus its
+channels, which each of its instances expects to have available when run.</p>
+</div>
+<div class="paragraph">
+<p>In addition to communication channels, components need access to configuration.
+As with channels, <em>Component Instance</em>s expect to be able to access the configuration settings
+declared by the component.</p>
+</div>
+<div class="paragraph">
+<p><em>Service Component</em>s are specified by means of a manifest that must provide the component&#8217;s
+identifier, as well as its channels and configuration settings.</p>
+</div>
+<div class="sect3">
+<h4 id="s-service-channels"><a class="anchor" href="#s-service-channels"></a>2.2.1. Channels</h4>
+<div class="paragraph">
+<p>A component can have one or more communication channels through which messages
+can be sent, or received or both. In <strong><em>Kumori</em></strong>, communications between components
+are <span class="underline">message based</span>, where each message is structured as a collection
+of segments. The entire collection is atomically sent and received.</p>
+</div>
+<div class="paragraph">
+<p>A component instance is injected with instances of its declared channels
+properly configured, and valid for the whole lifespan of the component&#8217;s
+instance.</p>
+</div>
+<div class="paragraph">
+<p>Each channel has a name and a type. The name of the channel is part of the
+definition of the component and is local to that definition. <strong><em>Kumori</em></strong>'s runtime
+API uses channel names to let component code retrieve the channel object and
+send/receive messages through it.</p>
+</div>
+<div class="paragraph">
+<p>Finally, a channel&#8217;s type indicates how the channel can be used from within the
+component. It also restricts the kinds of connectors (see later) to which it can
+be connected. <strong><em>Kumori</em></strong> currently defines the following channel types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">request</dt>
+<dd>
+<p>Messages can be sent and received through this channel, following a
+request/reply pattern. A component with this kind of channel can only receive
+messages as responses to previous request messages sent through it. The <code>req</code>
+channel should be declared by components that request functions from others.</p>
+</dd>
+<dt class="hdlist1">reply</dt>
+<dd>
+<p>This is the complement of the <code>req</code> channel. Thus messages can also be sent
+and received. In this case, sending is only allowed as a response to a
+previous request message.</p>
+</dd>
+<dt class="hdlist1">send</dt>
+<dd>
+<p>A channel with this type can only be used to send messages. No message can be
+received through a channel of this type.</p>
+</dd>
+<dt class="hdlist1">receive</dt>
+<dd>
+<p>A channel with this type can only be used to receive messages, not being
+possible to send any message through it.</p>
+</dd>
+<dt class="hdlist1">duplex</dt>
+<dd>
+<p>Channels with this type allow unrestricted sending and reception of messages.
+As we will see, <code>duplex</code> channels can be connected through <code>complete</code> connectors,
+that need destination information to be provided with each send. Thus <code>duplex</code>
+channels expose the membership of the channels attached to a connector, and
+make that available to components with such channels.</p>
+</dd>
+</dl>
+</div>
+<div class="sect4">
+<h5 id="_provided_depended_channels"><a class="anchor" href="#_provided_depended_channels"></a>Provided/Depended channels</h5>
+<div class="paragraph">
+<p>Component channels are further classified within a component as <em>provided</em> and
+<em>required</em> channels. <em>Provided</em> channels must be used to access the <em>provided
+function set</em> of the component, while <em>required</em> channels work more like an
+implementation detail of a component, allowing it to access its dependency set.
+Thus, they indicate what external functionality is needed by the component to
+implement its function.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="s-service-channel-protocol"><a class="anchor" href="#s-service-channel-protocol"></a>Channel protocol</h5>
+<div class="paragraph">
+<p>Optionally, channels can be associated with a named protocol element. This
+association is, for now, merely informative, although it can be used by tooling
+to infer potential trouble spots.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="s-service-component-parameters"><a class="anchor" href="#s-service-component-parameters"></a>2.2.2. Configuration settings</h4>
+<div class="paragraph">
+<p>A component declares the set of configuration settings it expects its instances
+to get when they start executing.</p>
+</div>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong> we divide settings into <em>resources</em> and <em>parameters</em>.</p>
+</div>
+<div class="sect4">
+<h5 id="_configuration_resources"><a class="anchor" href="#_configuration_resources"></a>Configuration resources</h5>
+<div class="paragraph">
+<p>Configuration resources represent entities that must be mediated by <strong><em>Kumori</em></strong>.
+They are usually subjected to some form of restriction, and oftentimes, contain
+information that is used by the platform itself, or the runtimes of the
+components.</p>
+</div>
+<div class="paragraph">
+<p>Configuration resource types are defined only by <strong><em>Kumori</em></strong>, and some of their
+information is made available through the <strong><em>Kumori</em></strong> API to the components
+finally consuming them.</p>
+</div>
+<div class="paragraph">
+<p>To create or allocate a resource, users must detail its characteristics in a
+manifest, and give it a unique name which will be used to refer to it.</p>
+</div>
+<div class="paragraph">
+<p>For example, a <code>persistent volume</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec" : "eslap://eslap.cloud/resource/volume/persistent/1_0_0",
+  "name" : "eslap://mydomain/resources/volume/mypersistent",
+  "parameters" : {
+    "size":"100"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, a <code>vhost</code> resource can be created like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec" : "eslap://eslap.cloud/resource/vhost/1_0_0",
+  "name" : "eslap://mydomain/resources/vhost/wwwmywebsitecom",
+  "parameters" : {
+    "vhost": "www.mywebstite.com"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_predefined_resources"><a class="anchor" href="#_predefined_resources"></a>Predefined resources</h5>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> provides a set of predefined resources for every component. They cannot
+be declared on a component, although initial values for some of them can be
+specified on deployment.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__cpu</dt>
+<dd>
+<p>Amount of CPU units given to an instance of a component. Each CPU unit
+corresponds to a specific amount of raw compute power.</p>
+</dd>
+<dt class="hdlist1">__memory</dt>
+<dd>
+<p>Amount of main memory units needed by an instance of a component. Each unit
+corresponds to a certain amount of physical RAM plus a fraction of that value
+of swap.</p>
+</dd>
+<dt class="hdlist1">__ioperf</dt>
+<dd>
+<p>Amount of I/O performance units available to an instance of a component. Each
+IOperf unit corresponds to a specific disk bandwidth rate and to a specific
+rate of disk operations per second (IOPS) the instance can perform. <strong>The way
+disk performance is configured is temporary, and will be improved in future
+releases.</strong></p>
+</dd>
+<dt class="hdlist1">__bandwidth</dt>
+<dd>
+<p>Maximum rate (in Mbps) of data transmission through network interfaces.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The above set of resources is applicable to each instance of a component, and
+it is conceivable that each instance gets different values for those resources,
+depending on scaling decissions made by <strong><em>Kumori</em></strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Actual unit values are described in <a href="#s-resource-units-definition">Resource units definition and implications</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Besides the above, <strong><em>Kumori</em></strong> deals with collective properties of a <em>Service Component</em>, that
+is, properties of the set of its instances:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__instances</dt>
+<dd>
+<p>Number of instances of a given component to be maintained running.</p>
+</dd>
+<dt class="hdlist1">__maxinstances</dt>
+<dd>
+<p>Maximum number of instances of a given component allowed to be running
+simultaneously.</p>
+</dd>
+<dt class="hdlist1">__resilience</dt>
+<dd>
+<p>Number of failures needed to take down all instances of a component. The
+resilience is specified by levels which indicate various types of failures by
+likelihood (e.g. normal data center failures, vs whole datacenter failure, vs
+whole region failure, etc&#8230;&#8203;).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The three properties are correlated, as the number of instances must be
+sufficient to cover the level of resilience demanded.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_configuration_parameters"><a class="anchor" href="#_configuration_parameters"></a>Configuration parameters</h5>
+<div class="paragraph">
+<p>Configuration parameters are named pieces of application data which can vary on
+each deployment of a service. Each configuration parameter has a type,
+specified by a type name, constructed out of a URI with element type
+<code>parameter</code>. When not specified, the type is assumed to be a valid JSON object.</p>
+</div>
+<div class="paragraph">
+<p>Currently <strong><em>Kumori</em></strong> provides a set of predefined types that developers can use
+directly. In addition, developers can define types derived from the ones
+provided. See the appendices for a relation of the available types.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> toolchain can use these declarations to verify sanity, as well as to
+support user interactions in tools.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="s-service-component-runtime"><a class="anchor" href="#s-service-component-runtime"></a>2.2.3. Runtime</h4>
+<div class="paragraph">
+<p>Finally, each component needs to declare which runtime it needs so that it can
+be run properly. The runtime determines the characteristics of the execution
+environment an instance can expect to run under.</p>
+</div>
+<div class="paragraph">
+<p>Runtimes are named elements in <strong><em>Kumori</em></strong>, with an element type of <code>runtime</code>. It
+is possible to define additional runtime types derived from the existing ones.
+<strong><em>Kumori</em></strong> provides a set of predefined runtimes, presented in the appendices.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="s-service-component-manifest"><a class="anchor" href="#s-service-component-manifest"></a>2.2.4. Defining <em>Service Component</em>s: the Component manifest</h4>
+<div class="paragraph">
+<p>All the above elements come together when building a component declaration
+within the component Manifest. The component Manifest is a <code>JSON</code> file, whose
+structure is demonstrated by the following example component definition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/component/1_0_0", <i class="conum" data-value="1"></i><b>(1)</b>
+  "name": "eslap://some.domain/component/fe/0_1_1", <i class="conum" data-value="2"></i><b>(2)</b>
+  "code": "fe-code-blob", <i class="conum" data-value="3"></i><b>(3)</b>
+  "runtime": "eslap://eslap.cloud/runtime/native/2_0_0", <i class="conum" data-value="4"></i><b>(4)</b>
+  "channels": {
+    "provides": [{ <i class="conum" data-value="5"></i><b>(5)</b>
+      "name": "entrypoint",
+      "type": "eslap://eslap.cloud/channel/reply/1_0_0", <i class="conum" data-value="6"></i><b>(6)</b>
+      "protocol": "eslap://some.domain/protocol/message/http/0_1_0", <i class="conum" data-value="7"></i><b>(7)</b>
+    }],
+    "requires": [{ <i class="conum" data-value="8"></i><b>(8)</b>
+      "name": "sessiondb",
+      "type": "eslap://eslap.cloud/channel/request/1_0_0",
+      "protocol": "eslap://some.domain/protocol/message/dict/2_3_2"
+    }, {
+      "name": "sitedb",
+      "type": "eslap://eslap.cloud/channel/request/1_0_0",
+      "protocol": "eslap://some.domain/protocol/message/data/2_0_0"
+    }]
+  },
+  "configuration": { <i class="conum" data-value="9"></i><b>(9)</b>
+    "resources": [{ <i class="conum" data-value="10"></i><b>(10)</b>
+      "type": "eslap://eslap.cloud/resource/volume/volatile/1_0_0", <i class="conum" data-value="11"></i><b>(11)</b>
+      "name": "site", <i class="conum" data-value="12"></i><b>(12)</b>
+      "properties": { <i class="conum" data-value="13"></i><b>(13)</b>
+        "best_effort": true
+      }
+    }, { <i class="conum" data-value="14"></i><b>(14)</b>
+      "type": "eslap://eslap.cloud/resource/volume/persistent/1_0_0",
+      "name": "forever"
+    }],
+    "parameters": [{ <i class="conum" data-value="15"></i><b>(15)</b>
+      "name": "database",
+      "type": "eslap://eslap.cloud/parameter/string/1_0_0",
+      "default": "site"
+    }, {
+      "name": "prefix",
+      "type": "eslap://eslap.cloud/parameter/string/1_0_0"
+    }]
+  },
+  "profile": { <i class="conum" data-value="16"></i><b>(16)</b>
+    "threadability": "*"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Manifest specification version.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Component name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Name of the <em>blob bundle</em> containing the executable component pieces to be
+deployed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Runtime declaration. This is the runtime under which this component has been
+designed to run. In this case, the NATIVE runtime.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Provided channels section of the manifest. This is an array of channel
+descriptions. All channels in here define what kind of function this
+component provides.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Type of the channel.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Protocol to be run over the channel. This is optional in current version.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Required channels section. These channels are required for the component to
+operate properly, requesting services from others, or obtaining information.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Configuration section. With two parts, one for resources, another for data
+parameters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Resources: array. Each must be specified/reserved by deployment. The
+runtime takes care of handling their "installation". The application may
+access their properties through the API.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>Type of first resource: a volatile volume. The definition of this kind of
+resource carries several properties. One is the efforts made to maintain
+the same volume in case of instance restart.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>Name of resource. We can use this name in the API to access properties
+of the volume. In addition, volumes have a mountpoint property. When not
+provided, it is computed from this name, and accessible to the application
+code.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td>We fix some of the parameters associated to the resource type. In this
+case we declare it to be best_effort: the platform will try not to lose
+the state in case of failures/upgrades.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="14"></i><b>14</b></td>
+<td>Another volume resource. This one is of type persistent.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="15"></i><b>15</b></td>
+<td>Data configuration parameters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="16"></i><b>16</b></td>
+<td>Performance-related properties. To be handled by the platform.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the appendices we show the <code>json-schema</code> for a component&#8217;s manifest.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="s-service-topology"><a class="anchor" href="#s-service-topology"></a>2.3. Composing a <em>Service Application</em>: topology</h3>
+<div class="paragraph">
+<p>Service applications are obtained making autonomous Components play different
+<em>Roles</em> within the <em>Service Application</em>, and linking the channels of those roles
+via <em>Channel Connector</em>s.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a service application requires specifying its topology (essentially
+a labelled graph), which in <strong><em>Kumori</em></strong>'s case translates to providing the set of
+elements we present in what follows.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a id="s-service-roles"></a> Service Roles</dt>
+<dd>
+<p>The runnable parts of a <em>Service Application</em> are its roles. Each role is placed in a <em>Service Application</em> to
+interact in a certain way with the rest of the roles of the service, or,
+possibly with other actors outside the service. Any given Role is implemented
+by a <em>Service Component</em> capable of providing its functionality. Thus, a Role adopts the
+properties of the <em>Service Component</em> implementing it, in particular its channels and
+configuration parameters.</p>
+<div class="paragraph">
+<p>Roles in a <em>Service Application</em> are provided with names local to that <em>Service Application</em>. Those names
+  distinguish roles from each other.</p>
+</div>
+<div class="paragraph">
+<p>Finally, note that a role can be multiply instantiated within a running service.
+  Each <em>Role Instance</em> will be the result of instantiating the role&#8217;s associated component
+  with the set of parameters derived from the service configuration, and with
+  its channels connected according to the model representing the service
+  application.</p>
+</div>
+</dd>
+<dt class="hdlist1"><a id="s-service-configuration"></a> Service Configuration</dt>
+<dd>
+<p>It serves the same purpose as the configuration we considered for <em>Service Component</em>s. Thus,
+we have two sets of configuration entities, resources and parameters. The
+types of resources and parameters supported are the same, and they receive
+names local to the service application.</p>
+<div class="paragraph">
+<p>A <em>Service Application</em> must provide a means of propagating these configuration elements to each
+  one of its roles. The current version of <strong><em>Kumori</em></strong> allows resources to be
+  directly propagated to resources in roles. For parameters <strong><em>Kumori</em></strong> relies on
+  scripts that must be provided within a <em>Service Application</em> bundle, transforming the service
+  parameters into role parameters. This is described in more detail in section
+  <a href="#s-service-manifest">Putting it all together: The <em>Service Application</em> Manifest</a>.</p>
+</div>
+</dd>
+<dt class="hdlist1"><a id="s-service-connectors"></a> <em>Channel Connector</em>s</dt>
+<dd>
+<p>Roles within a <em>Service Application</em> cooperate to implement a service application. To do so
+they need to interact with each other. The <em>Service Application</em> specifies how they can
+interact by means of <em>Channel Connector</em>s linking together channels from the roles.</p>
+<div class="paragraph">
+<p>A service connector establishes a relationship among a set of channels from
+  different roles in a <em>Service Application</em>. The <em>Channel Connector</em> type determines what types of channels can
+  be related by it and what the semantics are as a result when instances of the
+  roles affected try to communicate via their related channels.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> currently specifies three kinds of connectors:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a id="s-service-connector-lb"></a> Load Balancer (<strong>LB</strong>)</dt>
+<dd>
+<p>A load balancer connector is designed to relate a set of <code>request</code> channels
+with a set of <code>reply</code> channels. Request channels must appear in the <code>depended</code>
+channel section of the component implementing the role supplying the channel.
+On the other hand, the <code>reply</code> channels must be specified in the <code>provides</code>
+channel section of the corresponding components.</p>
+<div class="paragraph">
+<p>Its semantics are simple. When a role instance sends a message through one of
+  its <code>request</code> channels attached to the LB connector, the connector selects one
+  of the instances of the roles supplying <code>reply</code> channels attached to the
+  connector. <strong><em>Kumori</em></strong> then delivers the message to that instance through the
+  relevant <code>reply</code> channel supplied by its role. When the instance receiving the
+  request sends back a reply, it should do so through the same channel it
+  received the request through, and the LB connector delivers it to the
+  requester role instance through the <code>channel</code> it used to send the request.</p>
+</div>
+<div class="paragraph">
+<p>At this point in time, <strong><em>Kumori</em></strong> does not allow specifying policies as to how
+  channels and instances should be selected to receive the request message.</p>
+</div>
+</dd>
+<dt class="hdlist1"><a id="s-service-connector-ps"></a> Publish-Subscribe (<strong>PS</strong>)</dt>
+<dd>
+<p>A Publish/Subscribe connector brings together <em>provided</em> <code>send</code> channels and
+<em>required</em> <code>receive</code> channels. The current <strong><em>Kumori</em></strong> semantics for this
+connector are also simple. Messages sent through one of the attached <em>send</em>
+channels are broadcasted to all attached <em>receive</em> channels (thus all role
+instances will have that message delivered to them through the corresponding
+attached channel).</p>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> currently allows the specification of filters for messages that must be
+  delivered through a particular <em>receive</em> channel. They are discussed in a
+  later section.</p>
+</div>
+</dd>
+<dt class="hdlist1"><a id="s-service-connector-complete"></a> Complete Connector (<strong>FC</strong>)</dt>
+<dd>
+<p>A complete connector links <code>duplex</code> channels from roles in a service.
+As explained earlier, messages sent through a duplex channel must indicate the destination,
+which must be one of the channel/instance combinations from roles providing a channel to
+the connector.
+In order for sender instances to be able to address the messages they
+send through a duplex channel, the Complete Connector interacts with the channel
+to notify changes in the available destinations set.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is up to each instance to handle the complexities of communication
+  among all instances with channels attached to the connector.
+</td>
+</tr>
+</table>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><a id="s-service-channels"></a> Service channels</dt>
+<dd>
+<p>As with components, service applications must expose their offered service, for
+end users of the service or for other services. Also like components, services
+will oftentimes require functionality from other services, and will need to
+establish a <em>Service Level Agreement</em> (SLA) to obtain it.</p>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> allows a <em>Service Application</em> to declare its <em>entry</em> and <em>dependency</em> points by means
+of <em>channels</em>.</p>
+</div>
+<div class="paragraph">
+<p>We have seen channels in the context of describing components. At the service
+level, channels behave similarly. The difference is that the service manifest
+must internally link those channels through connectors to internal component
+channels, as components handle ultimately communications.</p>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="s-service-builtin"><a class="anchor" href="#s-service-builtin"></a>2.4. Built-in services</h3>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> supplies a series of predefined services that service application
+developers can readily use with their own services. These services are made
+available to complete the functionality of the platform.</p>
+</div>
+<div class="paragraph">
+<p>Currently there is only one built-in service: the HTTP Inbound (also referred
+to as SEP, for Service Entry Point). The SEP allows incoming HTTP connections
+from the internet to services deployed on <strong><em>Kumori</em></strong> through a <strong>reply</strong> channel
+that the service must expose implementing the <code>message/http</code> protocol.</p>
+</div>
+<div class="sect3">
+<h4 id="s-service-component-sep"><a class="anchor" href="#s-service-component-sep"></a>2.4.1. The HTTP Inbound service</h4>
+<div class="paragraph">
+<p>This service provides the means to expose a domain name through which <strong><em>Kumori</em></strong>
+deployed services can be reached using the <code>http</code> protocol. Usage of this
+service will consist on configuring the domain for which requests should be
+served. The SEP exposes a <em>required</em> <code>request</code> channel implementing the
+<code>message/http</code> protocol. Through this channel the SEP can be linked to a
+customer-deployed service exposing a corresponding <code>reply</code> channel implementing
+the message/http protocol or a derived one.</p>
+</div>
+<div class="paragraph">
+<p>The SEP service takes care of primary load balancing, ending the http
+connection, for which it should be suitably configured according to its
+pseudo-manifest that we present here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ <i class="conum" data-value="1"></i><b>(1)</b>
+  "spec": "http://eslap.cloud/manifest/service/1_0_0",
+  "name": "eslap://eslap.cloud/services/http/inbound/1_0_0", <i class="conum" data-value="2"></i><b>(2)</b>
+  "channels": { <i class="conum" data-value="3"></i><b>(3)</b>
+    "requires": [{
+      "name": "frontend",
+      "type": "eslap://eslap.cloud/channel/request/1_0_0",
+      "protocol": "eslap://eslap.cloud/protocol/message/http/1_0_0"
+    }]
+  },
+  "configuration": {
+    "resources": [{
+      "name": "server_cert", <i class="conum" data-value="4"></i><b>(4)</b>
+      "type": "slap//eslap.cloud/resource/cert/server/1_0_0"
+    }, {
+      "name": "vhost", <i class="conum" data-value="5"></i><b>(5)</b>
+      "type": "eslap://eslap.cloud/resource/vhost/1_0_0"
+    }],
+    "parameters": [{
+      "name": "TLS", <i class="conum" data-value="6"></i><b>(6)</b>
+      "type": "eslap://eslap.cloud/parameter/boolean/1_0_0",
+      "default": "false"
+    }, {
+      "name": "clientcert", <i class="conum" data-value="7"></i><b>(7)</b>
+      "type": "eslap://eslap.cloud/parameter/boolean/1_0_0",
+      "default": "false"
+    }]
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Note that this is a simplified manifest. Any detail pertaining to the
+implementation of the component is left out, as the platform itself is
+providing it.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The service name is provided by <strong><em>Kumori</em></strong> itself.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We can see that only required channels are specified. Requests must arrive
+to this service via HTTP. The service balances requests and passes them
+to the service connected through its required channel.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Note that the server certificate is specified as a resource. To be used only
+when TLS is enabled. Passing it as a resource is a good practice helping to
+insure secrecy of its contents.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Note also that the <code>virtual host</code>, is passed as a resource too.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The TLS flag indicates whether https termination must be performed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Flag indicating whether the client must authenticate via a certificate. Only
+applies if TLS is true.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that in this example we introduced a simplified manifest for the built-in
+service. This is natural, as <strong><em>Kumori</em></strong> has no need for implementation-related
+details.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-service-manifest"><a class="anchor" href="#s-service-manifest"></a>3. Putting it all together: The <em>Service Application</em> Manifest</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We are now ready to put together the different pieces we have seen so far and
+provide a complete structural description of a service application.</p>
+</div>
+<div class="paragraph">
+<p>We have already seen many of the elements we should take into consideration. We
+now will introduce some missing pieces having to do with the interface presented
+by the service to the outside world.</p>
+</div>
+<div class="paragraph">
+<p>To do this, we consider a toy example of a service application. This application
+integrates two components: a front-end, serving HTML5 content, and serving HTTP
+requests; and a session db, storing session-related data for sharing among all
+instances of the front-end.</p>
+</div>
+<div class="paragraph">
+<p>This basic <em>Service Application</em> needs access to a data base, which is not provided from within
+the service, generating a dependency that must be satisfied from the outside.</p>
+</div>
+<div class="paragraph">
+<p>The structure of the service is somewhat simplistic, as the session db role does
+not provide a means to coordinate the contents among its potentially several
+instances.</p>
+</div>
+<div class="paragraph">
+<p>The manifest of the front-end component has been shown in section
+<a href="#s-service-component-manifest">Defining <em>Service Component</em>s: the Component manifest</a>. The SEP service&#8217;s manifest has been shown in
+section <a href="#s-service-component-sep">The HTTP Inbound service</a> and the next listing shows the manifest for
+the second component, the session db.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/component/1_0_0",
+  "name": "eslap://some.domain/component/sessiondb/0_1_1",
+  "code": "sessiondb-code-blob",
+  "runtime": "eslap://eslap.cloud/runtime/native/1_0_0",
+  "channels": {
+    "provides": [{
+      "name": "dictapi",
+      "type": "eslap://eslap.cloud/channel/reply/1_0_0",
+      "protocol": "eslap://some.domain/protocol/message/dict/2_3_2"
+    }]
+  },
+  "configuration": {
+    "resources": [{
+      "type": "eslap://eslap.cloud/resource/volume/volatile/1_0_0",
+      "name": "dict",
+      "properties": {
+        "best_effort": true
+      }
+    }],
+    "profile": {
+      "threadability": "1"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>Service Application</em> manifest describing its topology can be finally shown here. This kind
+of manifest shares some elements with that of a component. In particular it also
+declares configuration and endpoints. Beyond these similar elements, it also
+needs to declare roles, connectors and the rules to follow to propagate
+configuration to the roles.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/service/1_0_0", <i class="conum" data-value="1"></i><b>(1)</b>
+  "name": "eslap://eslap.cloud/service/example/0_0_1",
+  "code": "xSDDFjjnj ...ASAS",
+  "configuration": {
+    "resources": [{ <i class="conum" data-value="2"></i><b>(2)</b>
+      "name": "volatile_disk",
+      "type": "eslap://eslap.cloud/resource/volume/volatile/1_0_0"
+    },{
+      "name": "session_disk",
+      "type": "eslap://eslap.cloud/resource/volume/volatile/1_0_0"
+    }],
+    "parameters": [] <i class="conum" data-value="3"></i><b>(3)</b>
+  },
+  "roles": [{ <i class="conum" data-value="4"></i><b>(4)</b>
+    "name": "fe",
+    "component": "eslap://some.domain/component/fe/0_1_1",
+    "resources": { <i class="conum" data-value="5"></i><b>(5)</b>
+      "site": "volatile_disk"
+    },
+    "parameters": { <i class="conum" data-value="6"></i><b>(6)</b>
+      "prefix": "mydeploy"
+    }
+  }, {
+    "name": "sessions",
+    "component": "eslap://some.domain/component/sessiondb/0_1_1",
+    "resources": {
+      "dict": "session_disk"
+    }
+  }],
+  "channels": { <i class="conum" data-value="7"></i><b>(7)</b>
+    "provides": [{
+      "name": "service",
+      "type": "eslap://eslap.cloud/channel/reply/1_0_0",
+      "protocol": "eslap://eslap.cloud/protocol/message/http/1_0_0"
+    }],
+    "requires": [{
+      "name": "db",
+      "type": "eslap://eslap.cloud/channel/request/1_0_0",
+      "protocol": "eslap://eslap.cloud/protocol/message/http/1_0_0"
+    }]
+  },
+  "connectors": [{ <i class="conum" data-value="8"></i><b>(8)</b>
+    "type": "eslap://eslap.cloud/connector/loadbalancer/1_0_0",
+    "depended": [{
+      "endpoint": "service"
+    }],
+    "provided": [{
+      "role": "fe",
+      "endpoint": "entrypoint"
+    }],
+  }, {
+    "type": "eslap://eslap.cloud/connector/loadbalancer/1_0_0",
+    "depended": [{
+      "role": "fe",
+      "endpoint": "sessiondb"
+    }],
+    "provided": [{
+      "role": "sessions",
+      "endpoint": "dictapi"
+    }]
+  }, {
+    "type": "eslap://eslap.cloud/connector/loadbalancer/1_0_0",
+    "depended": [{
+      "role": "fe",
+      "endpoint": "sitedb"
+    }],
+    "provided": [{ <i class="conum" data-value="9"></i><b>(9)</b>
+      "endpoint": "db"
+    }]
+  }]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The manifest type is now <code>service</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Resources needed by the components behind the service&#8217;s roles must only be
+declared when sharing of the same resource among roles is needed. Otherwise,
+in order to simplify manifest structure, resources needed by components will
+be directly assigned in the service management tools
+(deployment/maintenance).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>In this case, no paramters are used. The mechanism will be described next.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Section that declares roles. Role declaration consists on assigning the role
+a name, and associating it with a component, for which we use the
+component&#8217;s URI identifier.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Note that within each role we can directly assign the resources its
+associated component needs from those declared in the service.
+Service-level resources not appearing here, will not be available to the
+instances of the role.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Also note that at this moment we can fix the values of configuration
+parameters for the particular role. For instance, in case we used the same
+code for different roles, with behaviors determined by a switch, this would
+be the place to set the value of such switch.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Channels are declared similarly to how we do it for components. There are
+provided and required channels. They should be linked via connectors with
+internal role channels or other services channels (for example SEP
+channels).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The connectors section declares those connectors used to link together
+endpoints from different roles in the service among themselves or with
+endpoints at the service level. It is an array of channel connectors, as
+described in section <a href="#s-service-connectors">[s-service-connectors]</a>. Each connector is specified
+by its type, and by a pair of collections of channel endpoints, the
+<code>depended</code> collection (those channels in the <code>requires</code>  collection of their
+component), and the <code>provided</code> collection (likewise, channels in the
+<code>provides</code> collection of their component).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>In the case of a channel declared by the <em>Service Application</em> itself, the role name is
+omitted. In this case we should take into account that the endpoints
+<em>required</em> by the service are <em>provided</em> to the internal roles for
+connection.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_configuration_propagation"><a class="anchor" href="#_configuration_propagation"></a>3.1. Configuration propagation</h3>
+<div class="paragraph">
+<p>In the previous example we have seen that a <em>Service Application</em> can define configuration as a
+component does. In this configuration we can have service-level resources,
+potentially shared by many roles in the service, as well as configuration
+parameters. In both cases, specification is identical to that used for
+components.</p>
+</div>
+<div class="paragraph">
+<p>Shareable resources declared in the <em>Service Application</em> must be directly linked to those roles
+making use of them. Once the resources are actually assigned to a service
+resulting from the deployment of the <em>Service Application</em>, then they are propagated to the
+instances of the components implementing the roles to which they have been
+linked in the <em>Service Application</em> manifest.</p>
+</div>
+<div class="sect3">
+<h4 id="_propagating_configuration_parameters"><a class="anchor" href="#_propagating_configuration_parameters"></a>3.1.1. Propagating configuration parameters</h4>
+<div class="paragraph">
+<p>Configuration parameters are pure data, and they are made sense of only by the
+application code.</p>
+</div>
+<div class="paragraph">
+<p>Each component declares its own set of parameters, and can provide default
+values. Component code can access these parameters via the runtime API provided
+by <strong><em>Kumori</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>At the service level, other parameters can also be declared for the <em>Service Application</em>, the
+intention being that the parameters needed by all the components be derived from
+the service-level parameters, which begs the question of how are those component
+parameters actually computed out of the values provided when the service is in
+deployment.</p>
+</div>
+<div class="paragraph">
+<p>The procedure is actually quite simple, and depends on accompanying a <em>Service Application</em> with
+a set of nodejs modules, one per role declared. Thus, if a role with name
+<code>RNAME</code> is declared in the <em>Service Application</em>, then there is a nodejs module with name
+<code>RNAME.coffee</code> exporting a function, which we refer to as <code>FRNAME</code>. This
+function takes a JSON object in and returns a JSON object out. The input JSON
+object has an entry per configuration parameter declared at the service
+application. The JSON object returned has an entry per configuration parameter
+declared in <code>RNAME</code>'s component.</p>
+</div>
+<div class="paragraph">
+<p>If no <code>nodejs</code> module exists associated to the role, then we assume
+<code>FRNAME(X)==TREE(RNAME)</code>, where <code>TREE(RNAME)(X) == X.RNAME</code>. That is, if
+propagation is uncomplicated, the service declares as one of its configuration
+parameters one with a role&#8217;s name, and a JSON type, without needing to provide
+the nodejs module. On deployment the JSON object is filled with the parameters
+needed for that role.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume that at deployment time, the set of <em>Service Application</em> parameters have been
+assigned values either by directly specifying them or by taking the defaults in
+the manifest of the <em>Service Application</em>. Let us refer to this set of parameters as <code>SCP</code>.</p>
+</div>
+<div class="paragraph">
+<p>Then, parameter <code>P</code> from role <code>R</code> associated to component <code>C</code> will receive value
+<code>V</code> if and only if:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>P</code> has been fixed in the <em>Service Application</em> manifest, with value <code>V</code></p>
+</li>
+<li>
+<p>Else, <code>FR(SCP).P==V</code></p>
+</li>
+<li>
+<p>Else, <code>FR(SCP).P==undefined</code>, and the default value for <code>P</code>
+in <code>C</code> is <code>V</code></p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+It is an error to leave any parameter with no assigned value
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-deployment"><a class="anchor" href="#s-deployment"></a>4. Deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given a <em>Service Application</em>, we can convert it into a <em>service</em> by deploying it on a <strong><em>Kumori</em></strong>
+stamp.</p>
+</div>
+<div class="paragraph">
+<p>Initial deployment is specified via the <em>deployment manifest</em>. The deployment
+manifest refers to the <em>Service Application</em>, and provides initial configuration for the service
+and its roles.</p>
+</div>
+<div class="paragraph">
+<p>To illustrate its components let us show a potential deployment manifest for the
+<em>Service Application</em> we just explored.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/deployment/1_0_0",
+  "servicename": "eslap://eslap.cloud/service/example/0_0_1", <i class="conum" data-value="1"></i><b>(1)</b>
+  "configuration": {<i class="conum" data-value="2"></i><b>(2)</b>
+    "resources": {
+      "volatile_disk": "300",<i class="conum" data-value="3"></i><b>(3)</b>
+      "session_disk": "150"
+    },
+    "parameters": {} <i class="conum" data-value="4"></i><b>(4)</b>
+  },
+  "roles": { <i class="conum" data-value="5"></i><b>(5)</b>
+    "fe": {<i class="conum" data-value="6"></i><b>(6)</b>
+      "resources": {
+        "__instances": 2,
+        "__cpu": 2,
+        "__memory": 3,
+        "__ioperf": 3,
+        "__iopsintensive": true,
+        "__bandwidth": 100,
+        "__resilience": 2
+      }
+    },
+    "sessions": {
+      "resources": {
+        "__instances": 1,
+        "__cpu": 1,
+        "__memory": 1,
+        "__ioperf": 1,
+        "__iopsintensive": false,
+        "__bandwidth": 10,
+        "__resilience": 1
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A deployment manifest MUST refer to the service application being deployed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The manifest must include values for the service-level configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Most resources must be referenced by resource token, assigned to the
+resource after registration of the resource. In this case, however, the
+resource is volatile disk space, which is directly represented.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Service has no parameters. It there were, they would simply be given.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The roles section spells out properties for each one of the roles in the
+<em>Service Application</em>, thus, for each role, we must have an entry with its name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>For any given role, all its intrinsic resources must be specified.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_bundles"><a class="anchor" href="#_bundles"></a>4.1. Bundles</h3>
+<div class="paragraph">
+<p>In previous sections we have presented the elements of <strong><em>Kumori</em></strong>'s service model
+and how they are represented with manifests.</p>
+</div>
+<div class="paragraph">
+<p>In at least two cases, <em>Service Application</em> and <em>Service Component</em>, it is necessary to present not only the
+manifests, but also some extra information. In the case of a <em>Service Application</em> we need to
+provide the nodejs modules that help propagate configuration parameters. In the
+case of a <em>Service Component</em> we need to provide the actual code of the component, and so on.</p>
+</div>
+<div class="paragraph">
+<p>User-definable elements need to be registered onto <strong><em>Kumori</em></strong> before they can be
+used in a deployment. To facilitate this process, <strong><em>Kumori</em></strong> accepts <em>bundles</em>
+encapsulating all the material necessary to register an element with <strong><em>Kumori</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>A <em>bundle</em> is nothing more (and nothing less) than a directory structure where
+the top directory contains a file with name <em>Manifest.json</em>. We can then talk
+about a <em>component</em> bundle, when its top level <code>Manifest.json</code> file is that of a
+component. A Service Application bundle is one with its top level
+<code>Manifest.json</code> file containing a <em>Service Application</em> manifest, <em>et cetera</em>.</p>
+</div>
+<div class="paragraph">
+<p>Besides the above mentioned manifest, a Bundle can recursively nest other
+bundles, forming a tree of bundles. One type of bundle that cannot contain any
+more bundles is what we refer to as a <em>blob bundle</em>. Blob bundles are designed
+to carry code or other non-interpreted material. The manifest for a blob bundle
+is simply,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec" : "http://eslap.cloud/manifest/blob/1_0_0",
+  "name" :"fe-code-blob", <i class="conum" data-value="1"></i><b>(1)</b>
+  "hash" : "xSDDFjjnj ...ASAS" <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Free string, but must be unique within its immediate containing bundle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the blob is presented as an archive, its SHA1.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The blob bundle itself must contain either one archive (the blob) in one of the
+packaging formats admitted by the platform or one folder (the contents of the
+blob).</p>
+</div>
+<div class="paragraph">
+<p>Even though in our description nesting of bundles is arbitrary, it is often
+advisable to directly nest only those bundles carrying elements which can be
+referred from the element in the nesting bundle. E.g., a <em>Service Application</em> bundle nesting
+<em>Service Component</em> bundles, but not the other way around.</p>
+</div>
+<div class="paragraph">
+<p>Finally, it may be occasionally useful to group several bundles within a folder,
+so that related elements are properly organized. This situation is easily
+detected by the absence of a <em>Manifest.json</em> file within the grouping folder. In
+those cases, bundle processing ignores the grouping folder and processes its
+contents as if they were in its parent folder (we could say that non-bundle
+folder structure is flattened when processing).</p>
+</div>
+<div class="paragraph">
+<p>Bundles can be packaged in many ways. <strong><em>Kumori</em></strong> can accept zip-packaged bundles,
+directory-packaged bundles (as subdirectories of other bundles), and
+git-packaged bundles. Other formats may be supported in the future.</p>
+</div>
+<div class="paragraph">
+<p>Some bundles need "code" blobs. These must be included within a <em>blob bundle</em>.
+Code-carrying <em>blob bundles</em> must be unambiguously associated with the bundles
+referring to them. This match is achieved via the <code>code</code> attribute in their
+manifest, which must match the <code>name</code> of the <em>blob bundle</em> containing its code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/component/1_0_0",
+  "name": "eslap://some.domain/component/fe/0_1_1",
+  "code": "fe-code-blob",
+  ...
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_referencing_git_bundles"><a class="anchor" href="#_referencing_git_bundles"></a>4.1.1. Referencing git bundles</h4>
+<div class="paragraph">
+<p>As mentioned above, it is possible to reference git bundles. This is done via
+a <code>Bundles.json</code> file with the following format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec" : "http://eslap.cloud/manifest/bundles/1_0_0",
+  "bundles" : [{
+    "repository" : "https://gitlab.somewhere.far/user/project.git", <i class="conum" data-value="1"></i><b>(1)</b>
+    "branch"     : "branchName",
+    "subdir"     : "optionalSubdirectory"
+  },{
+    "site" : "http://some.domain/somearchive.zip"                   <i class="conum" data-value="2"></i><b>(2)</b>
+  }]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We can refer to https-based accessible repositories. In this case the
+repository must be public.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Bundles can also be referred by a URL to a zip file.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When a <code>Bundles.json</code> file is found within a bundle, it is processed bringing
+the directories/packages referenced from those repos as bundles themselves.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__em_service_application_em_bundles"><a class="anchor" href="#__em_service_application_em_bundles"></a>4.1.2. <em>Service Application</em> bundles</h4>
+<div class="paragraph">
+<p><em>Service Application</em>s must carry with them nodejs modules to compute parameter propagations
+to the roles within the application. As explained earlier, each role declared
+within a <em>Service Application</em> should have a module with its name (suffixed with .coffee) that
+can be run to get a function computing the target parameter values for the
+role&#8217;s component.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> expects those modules (all of them) to be in the code bundle of the
+<em>Service Application</em>. What is more, all dependencies needed by those functions should be part
+of that code bundle.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_registering_elements_with_a_strong_em_kumori_em_strong_stamp"><a class="anchor" href="#_registering_elements_with_a_strong_em_kumori_em_strong_stamp"></a>5. Registering elements with a <strong><em>Kumori</em></strong> stamp</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As mentioned earlier, elements must be registered in <strong><em>Kumori</em></strong> before they can be
+used in a deployment. This implies registering them on the stamp.</p>
+</div>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong> registration is done by using the REST API of the <code>Admission</code>
+service.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_the_strong_em_kumori_em_strong_admission_api"><a class="anchor" href="#_using_the_strong_em_kumori_em_strong_admission_api"></a>5.1. Using the <strong><em>Kumori</em></strong> admission API</h3>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> exposes a REST API that can be used to register elements to the stamp.
+Authentication through this interface is token-based, where the token must have
+been obtained through the user portal.</p>
+</div>
+<div class="paragraph">
+<p>The user wishing to send a bundle for registration (or to produce a deployment)
+must send a POST <code>bundles</code> on the <code>Admission</code> URL publicized by the stamp
+provider, tipically <code>https://stamp-of-interest.kumori.cloud/admission</code>, and
+stream a file which must be either a <code>Bundles.json</code> file or a packaged bundle
+file (zip).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="s-service-dependencies"><a class="anchor" href="#s-service-dependencies"></a>5.2. Linking services</h3>
+<div class="paragraph">
+<p>A <em>Service Application</em> declares a set of dependency channels. These channels should be bound to
+specific services on deployment. Establishing such binding will be mediated by
+<strong><em>Kumori</em></strong>, and will involve establishing the terms of the SLA with the providing
+services, which may need to be elastically re-scaled to cope with the terms of
+the provisioned SLA.</p>
+</div>
+<div class="paragraph">
+<p>The current <strong><em>Kumori</em></strong> version allows establishing links between services without
+any SLA negotiation.</p>
+</div>
+<div class="paragraph">
+<p>Service dependencies are established through the usage of the admission API
+of <strong><em>Kumori</em></strong>. This API can be used to establish and take down dependencies
+between services. The parameters should simply reference the endpoints
+involved in taking the dependency.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Services must be written to support interruptions in the depended
+services. As mentioned earlier, failures will occur. This includes failures in
+the services depended upon. While such failure may mean a service cannot be
+provided while the fault exists, service writers should avoid at all costs
+permanent service shutdown in the event of a dependency failure.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-component-runtime"><a class="anchor" href="#s-component-runtime"></a>6. Component programming</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous sections we have explained the elements that constitute our
+service model. Missing from it were aspects about how code is actually run
+within it.</p>
+</div>
+<div class="paragraph">
+<p>As mentioned earlier, roles are associated with components, which, on
+deployment, are instantiated multiple times. Each role instance receives the
+configuration of its role, making them indistinguishable <em>ab-initio</em> by others
+in the same service. In some cases, it will be possible to also use id-like data
+to specify a particular instance to send a message to.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> base support is provided over <code>nodejs</code>. <strong><em>Kumori</em></strong>'s <code>NATIVE</code> runtime
+provides a <code>nodejs</code> environment to run application code into, and the API is
+available from this environment. Despite this, it is entirely possible to run
+non-nodejs code within this environment, as besides nodejs itself, it includes a
+full linux stack, with 0MQ and access to loopback interfaces.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<strong><em>Kumori</em></strong> does not automatically bring any dependencies of the
+component&#8217;s code, even if it is purely based on nodejs. Components have the
+choice to pull any extra dependencies from internet-open sites, as internet
+connections to public IPs are available by default. However it is not advisable
+to proceed this way because it makes startup time unpredictable.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The full definition of the software stack available on each <em>runtime</em> is
+provided in the appendices.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_native_component_programming_the_api"><a class="anchor" href="#_native_component_programming_the_api"></a>6.1. Native component programming: the API</h3>
+<div class="sect3">
+<h4 id="_initialization"><a class="anchor" href="#_initialization"></a>6.1.1. Initialization</h4>
+<div class="paragraph">
+<p>The NATIVE runtime executes <strong><em>Kumori</em></strong> <em>Service Component</em> instances within Docker containers.
+The particular linux flavor of the container is described in the appendices,
+on top of which we have added <strong><em>Kumori</em></strong>'s runtime software and facilities,
+including <code>nodejs</code> and <code>0MQ</code>.</p>
+</div>
+<div class="paragraph">
+<p>A <code>blob bundle</code> providing the code for a component under the NATIVE runtime,
+must be a nodejs module exporting a class extending the <code>Component</code> class,
+defined within the <code>component</code> module available in the NATIVE environment.
+Class <code>Component</code> has the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class Component
+    constructor: (     <i class="conum" data-value="1"></i><b>(1)</b>
+        @runtime,      <i class="conum" data-value="2"></i><b>(2)</b>
+        @role,         <i class="conum" data-value="3"></i><b>(3)</b>
+        @iid,          <i class="conum" data-value="4"></i><b>(4)</b>
+        @incnum,       <i class="conum" data-value="5"></i><b>(5)</b>
+        @localData,    <i class="conum" data-value="6"></i><b>(6)</b>
+        @resources,    <i class="conum" data-value="7"></i><b>(7)</b>
+        @parameters,   <i class="conum" data-value="8"></i><b>(8)</b>
+        @dependencies, <i class="conum" data-value="9"></i><b>(9)</b>
+        @offerings     <i class="conum" data-value="10"></i><b>(10)</b>
+    )     -&gt;
+
+    run: -&gt;                              <i class="conum" data-value="11"></i><b>(11)</b>
+        # 
+    shutdown: -&gt;                         <i class="conum" data-value="12"></i><b>(12)</b>
+        # 
+    reconfig: (resources, parameters) -&gt; <i class="conum" data-value="13"></i><b>(13)</b>
+        # changed configuration
+        true # if we can take the reconfig
+module.exports = Component</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The constructor returned is used to create an instance of the component
+object representing the component and pass deployment-derived information
+and an object representing the platform.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>runtime</code> object, through which the component can interact with the
+platform. We will discuss it in depth later on.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>role</code> to which this instance belongs. This is a string with the name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>Instance Id</code> <strong><em>Kumori</em></strong> assigns to this instance. This is a unique value
+during the lifetime of a service. It is a string.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <em>incarnation number</em> of the instance. It indicates how many times
+the instance has been started.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The path where to store local data. All components get this path even
+though they do not declare a volatile volume: this is it, the default
+volatile volume for which no effort is made in case of failures. Note that
+component instance restarts may destroy the data in this location, thus it
+is unwise to rely on its persistence accross failures.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The set of resource objects assigned to this instance. This is organized
+as a dictionary, whose keys are the names of the declared resources for
+which data can be queried.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The set of configuration parameters, organized as a dictionary with their
+names as keys.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>The set of <strong>requires</strong> channels organized as a dictionary, where the keys
+are the requires channel names, and the values are <em>channel objects</em>, which
+we will analyze later on.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>The set of <strong>provides</strong> channels. A similar dictionary to the one for
+<code>requires</code> channels.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>Method invoked to start execution of the instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>Method invoked to warn that the instance is going to be stopped. The
+instance should take whatever action it deems necessary to save state, and
+save work or avoid data loss or loss of service quality.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td>Change of configuration parameters/and or resources. Returns <strong><em>true</em></strong> if
+the reconfiguration can be taken without problem. Otherwise, the instance
+is restarted.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> will perform a <code>require './component'</code>, loading the module representing
+the component code. Then it will instantiate the class passing the arguments
+presented above. It will complete initialization by calling the <code>run</code> method on
+the object instance just created.</p>
+</div>
+<div class="paragraph">
+<p>The above simple protocol forms the base to instantiate any kind of component on
+<strong><em>Kumori</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>The rest of the interaction is, except for programmed shutdowns, initiated by
+the component itself via the <code>runtime</code> object received during construction.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_runtime_object"><a class="anchor" href="#_the_runtime_object"></a>6.1.2. The Runtime object</h4>
+<div class="paragraph">
+<p>When a component is instantiated, <strong><em>Kumori</em></strong> creates an instance of the <code>runtime</code>
+object and passes it to the component&#8217;s code.</p>
+</div>
+<div class="paragraph">
+<p>The <code>runtime</code> object offers a set of services to interact with <strong><em>Kumori</em></strong>.
+The <code>runtime</code> class has the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class RuntimeAgent
+    ping: -&gt;                                 <i class="conum" data-value="1"></i><b>(1)</b>
+    createChannel: (requestHandler) -&gt;       <i class="conum" data-value="2"></i><b>(2)</b>
+    getMemberShip: (channelId) -&gt;            <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The method ping must be used by the instance to periodically signal its good
+health to <strong><em>Kumori</em></strong>. At the very least, ping must be used to indicate the
+event loop is not blocked. It is recommended that ping is called once every
+second.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>createChannel</code> method returns a dynamic <strong><em>Reply</em></strong> channel ready to be
+used. When the <code>requestHandler</code> parameter is present, it is expected to have
+a <code>handleRequest</code> method, which will be invoked when messages arrive through
+the channel. If the parameter is not present, the component will need to
+override the <code>handleRequest</code> method of the returned channel in order to
+serve requests.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Returns a promise resolved to a list of available destinations for the
+channel passed as parameter. This applies only to <strong><em>Duplex</em></strong> channels.
+Each item of the list is an object including destination instance id,
+destination endpoint and destination service.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_channel_api"><a class="anchor" href="#_the_channel_api"></a>6.1.3. The channel API</h4>
+<div class="paragraph">
+<p>Channel objects offer a set of methods that <em>Component Instance</em>s can use to communicate with
+other <em>Component Instance</em>s. Different chanels offer different methods.</p>
+</div>
+<div class="sect4">
+<h5 id="__em_request_reply_em_channels"><a class="anchor" href="#__em_request_reply_em_channels"></a><em>Request/Reply</em> channels</h5>
+<div class="paragraph">
+<p>Request/Reply channels are used to perform direct requests to other
+components in the service. Typically a Request channel is declared as a
+dependency to a component, whereas a Reply channel is declared as an offering.
+Request/Reply channels can pass along references to dynamic Reply channels
+created using <code>createChannel</code> method. On arrival, dynamic Reply channels get
+transformed into Request channels.</p>
+</div>
+<div class="paragraph">
+<p>A Reply channel is any class satisfying the following specification:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class Reply
+    handleRequest: (message, channels) -&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Method to execute when a request is received, where <em>message</em> is an array
+of message parts, and <em>channels</em> is an array of Dynamic channels objects.<br>
+Returns a promise resolved to a [message, channels] array.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A component uses a Reply channel by simply defining the handleRequest method on
+the channel object it receives, overriding the default implementation of the
+runtime.</p>
+</div>
+<div class="paragraph">
+<p>If something happens, the channel emits an <code>error</code> event with the following
+signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">reply_error_handler = (error) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>An <code>Error</code> object extended with <code>code</code> and <code>originalMessage</code> attributes.
+The <code>code</code> attribute indicates what happened and the <code>originalMessage</code>
+indicates which message produced the error. Currently, Reply channels only
+generates <code>EDESTINATIONUNAVAILABLE</code> error events.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A Request channel is any class satisfying the following specification:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class Request 
+    sendRequest: (message, channels, config) -&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sends the request to the target of the channel, where <em>message</em> is an array
+of message parts, <em>channels</em> is an array of Dynamic channel objects, and
+<em>config</em> is a dictionary to customize the request management (currently with
+just a <em>timeout</em> key, with the maximum time to resolve the request).<br>
+Returns a promise resolved to a [message, channels] array</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that the method returns a <strong><em>Promise</em></strong>. Promises are used in
+this setting to facilitate pipelining of request between component instances. In
+the above API’s, <em>message</em> is an array of message parts, and <em>channels</em> is an
+array of dynamic channels being passed around.</p>
+</div>
+<div class="paragraph">
+<p>If a request message can not be forwarded to any replyer, the promise is
+rejected with an error containing one of the following error codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>EDESTINATIONUNAVAILABLE</code>: a replier cannot be found.</p>
+</li>
+<li>
+<p><code>TIMEOUT</code>: reply not received.</p>
+</li>
+<li>
+<p><code>ESENDFAILED</code>: unexpected failure sending the request.</p>
+</li>
+<li>
+<p><code>ESENDABORTED</code>: request aborted by the platform.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__em_receive_em_channels"><a class="anchor" href="#__em_receive_em_channels"></a><em>Receive</em> channels</h5>
+<div class="paragraph">
+<p>A <em>receive</em> channel is an event emitter, issuing the <strong><em>message</em></strong> event. The
+event carries with it two parameters: the first is a <code>message</code>, and the second
+optionally carries a dictionary of dynamic channels. Besides the events it
+emits, <em>receive</em> channels expose subscription methods, as shown in the portion
+of its class definition below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class Receive
+  subscribe: (topic) -&gt;    <i class="conum" data-value="1"></i><b>(1)</b>
+  unsubscribe: (topic) -&gt;  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Adds a new subscription. The channel will only emit messages matching
+one of the topics included in the channel subscription list. If the topic
+list is empty, all messages will be emitted.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Removes an existing subscription. The channel will stop emitting messages
+associated to this topic unless the topics list gets empty. In that case,
+all messages will be emitted.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The signature of a <code>message</code> event handler is as follows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">receive_message_handler = (message, channels) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>channels</code> is optional.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__em_send_em_channels"><a class="anchor" href="#__em_send_em_channels"></a><em>Send</em> channels</h5>
+<div class="paragraph">
+<p>A <em>send</em> channel implements a <strong><em>send</em></strong> method accepting a message as its first
+parameter, and, optionally, a dictionary of dynamic channels created by the
+sender, as well as a topic string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">class Send
+  send: (message, channels, topic) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sends a message, where <code>message</code> is and array of request parts,
+<code>channels</code> is an array of chanels and <code>topic</code> is the topic of the message.<br>
+Note that both <code>channels</code> and <code>topic</code> are optional parameters.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If destinations are not found for a message, the channel emits an <code>error</code> event.
+The event handler has the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">send_error_handler = (error) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>An <code>Error</code> object extended with <code>code</code> and <code>originalMessage</code> attributes.
+The <code>code</code> attribute contains <code>EDESTINATIONUNAVAILABLE</code> code.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__em_duplex_em_channels"><a class="anchor" href="#__em_duplex_em_channels"></a><em>Duplex</em> channels</h5>
+<div class="paragraph">
+<p><em>Duplex</em> channels allow both sending and receiving messages asynchronously,
+combining the functionality of <em>send</em> and <em>receive</em> channels into one, and
+augmenting it with the ability to distinguish the destination.</p>
+</div>
+<div class="paragraph">
+<p>Thus, <em>duplex</em> channels issue <em>message</em> events, as do <em>receive</em> channels, with
+its two parameters (<code>message</code> and <code>channels</code>), augmented with another parameter,
+<code>sender</code>, containing a string identifying the instance sending the message. This
+is the signature of a handler:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">duplex_message_handler = (message, sender, channels) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>channels</code> is optional.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>They also implement a <strong><em>send</em></strong> method, accepting also a message parameter, and a
+second parameter indicating the instance to receive the message, among the set
+of allowed target instances.</p>
+</div>
+<div class="paragraph">
+<p>If a message cannot be delivered to the destination instance, the channel emits
+an <code>error</code> event with the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">duplex_error_handler = (error) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>error</code> parameter is an <code>Error</code> object with extra <code>code</code> and
+<code>originalMessage</code> attributes. <code>code</code> contains <code>EDESTINATIONUNAVAILABLE</code> and
+<code>originalMessage</code> is a pointer to the undelivered message.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Duplex channels also support a <strong><em>getMembership</em></strong>  method, returning the
+list of instance ID’s that can be used as targets of <strong><em>send</em></strong>'s. When connected
+via <em>complete</em> connectors, the list is built out of the set of destination channels
+attached to it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee"># A duplex channel class can send a receive messages.
+class Duplex
+  send: (message, target, channels) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  getMemberShip: () -&gt; <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sends <code>message</code> to the instance identified by <code>target</code>, optionally passing a
+dictionary of created dynamic channels, <code>channels</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Returns a promise resolved to a list of available destinations that can be
+reached through the channel via <code>send</code> messages.
+Each item of the list is an object including destination instance id,
+destination endpoint and destination service.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, a duplex channel also emits the event <strong><em>changeMembership</em></strong>, issued
+when the set of destination instances attached to the <em>complete</em> connector changes
+as a consequence of a change in the deployment.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">duplex_changeMembership_handler = (members) -&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>members</code> contains the list of available destinations that can be reached
+through the channel via <code>send</code> messages.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dynamic_channels"><a class="anchor" href="#_dynamic_channels"></a>6.1.4. Dynamic channels</h4>
+<div class="paragraph">
+<p>Dynamic channels are explicitly requested by a component’s code to the <strong><em>Kumori</em></strong>
+runtime dynamically.</p>
+</div>
+<div class="paragraph">
+<p>currently, <strong><em>Kumori</em></strong> supports requesting dynamic channels of type <em>reply</em>, while
+<em>duplex</em> will be supported in future releases.</p>
+</div>
+<div class="paragraph">
+<p>Dynamic channels are not declared  in the configuration specification of the
+component, but they can be passed through an ordinary channel to one or more
+receiving instances, thus, they can be considered part of the “protocol” of the
+declared channels over which they are carried.</p>
+</div>
+<div class="paragraph">
+<p>When a <em>reply</em> channel is transmitted, the receiver gets a corresponding
+<em>request</em> channel. This establishes a dedicated connection between the instances
+participating in this exchange, where the receiver can initiate requests on the
+sender via that <em>request</em> channel it received.</p>
+</div>
+<div class="paragraph">
+<p>Dynamic channels have the following lifecycle properties:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>They do not survive its creator’s restart. That is if the instance creating a
+dynamic channel is restarted, having its incarnation number incremented, all
+dynamic channels it created disappear. On restart, thus, an instance must resend
+its dynamic channels.</p>
+</li>
+<li>
+<p>Also, when an instance is restarted, all dynamic channels it received in its
+previous incarnation are no longer available to it. Thus the protocols passing
+dynamic channels must take into account the possibility that the receiver be
+restarted losing that dynamic channel, and the ability to request whatever
+services it was scheduled to receive through it. This means that protocols
+transmitting dynamic channels must operate in a way allowing re-generation of
+those channels.</p>
+</li>
+<li>
+<p>Passing multiple times the same dynamic channel to the same connected
+instance results in the receiver receiving exactly the same channel every time.
+No new <em>Request</em> (or <em>Duplex</em>) channels are created in the receiver.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="s-httpsupport"><a class="anchor" href="#s-httpsupport"></a>6.2. HTTP support in <strong><em>Kumori</em></strong></h3>
+<div class="paragraph">
+<p>A large percentage of services interact with their users via the HTTP protocol.
+As seen in earlier sections, <strong><em>Kumori</em></strong> provides a builtin service, the
+<strong><em>HTTP Inbound</em></strong>, that must be configured if the service needs to accept
+external HTTP requests.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>HTTP Inbound</em></strong> creates instances of the builtin component <strong><em>SEP</em></strong>, whose
+mission is to balance load and proxy an IP endpoint declared at the service
+application level, expecting connections to transport the HTTP protocol.
+The <strong><em>SEP</em></strong> itself is externally load balanced via standard mechanisms available
+for this purpose on the internet.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>SEP</em></strong> applies a minimal transformation of the HTTP protocol to push it through
+its <em>request</em> channel, through a provided channel of the service, to a component
+working as the web server. <strong><em>SEP</em></strong> is able to support websockets by using
+dynamic channels with the actual front end component.</p>
+</div>
+<div class="paragraph">
+<p>In order to allow programmers to use familiar interfaces, <strong><em>Kumori</em></strong> provides a
+module, <strong><em>httpMessage</em></strong> handling the <strong>message/http</strong> protocol emitted by <strong><em>SEP</em></strong>,
+providing a server with an interface like that provided by the builtin
+<strong>httpServer</strong> module in nodejs. <strong><em>httpMessage</em></strong> includes full support for
+websockets.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee"># component.coffee
+#
+Component   = require 'component'
+http        = require 'http-message'  <i class="conum" data-value="1"></i><b>(1)</b>
+
+module.exports = class MyComponent extends Component
+  ...
+  run: () -&gt;
+    channel = @offerings[name]
+    server  = http.createServer @handleRequest
+    server.listen channel   <i class="conum" data-value="2"></i><b>(2)</b>
+    ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Requiring the module provides the component program with an httpServer-like
+function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Instead of binding the server to a port, we link it to one of our channels,
+the one receiving <code>message/http</code> communications.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the example above, once we have created the <code>server</code>, we can use it as an
+<code>httpServer</code> within frameworks such as <code>express</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee"># component.coffee
+#
+Component   = require 'component'
+http        = require 'http-message'
+
+module.exports = class MyComponent extends Component
+  ...
+  run: () -&gt;
+    app = express()
+    app.use ...
+    channel = @offerings[name]
+    server = http.createServer app
+    server.listen channel
+    ...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_supported_languages_for_the_api"><a class="anchor" href="#_other_supported_languages_for_the_api"></a>6.3. Other supported languages for the API</h3>
+<div class="paragraph">
+<p>API access for other languages is planned. Please contact us if you would like
+to know more.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fitting_legacy_code"><a class="anchor" href="#_fitting_legacy_code"></a>7. Fitting legacy code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <em>NATIVE</em> runtime in <strong><em>Kumori</em></strong> is based on <code>nodejs</code> + zmq (0MQ on nodejs). The
+instance initialization sequence depends on having the proper nodejs module on
+the top-level directory of the code bundle implementing a component.</p>
+</div>
+<div class="paragraph">
+<p>However it <span class="underlined">does not imply</span> that all components must be nodejs
+based. It only implies that the module <strong><em>Kumori</em></strong>'s native runtime expects must
+exist, and that direct interactions with the rest of the API (channels, runtime)
+must be ultimately carried out by nodejs code loaded on initialization (i.e.,
+the <strong>component.coffee</strong> module).</p>
+</div>
+<div class="paragraph">
+<p>As mentioned earlier, the NATIVE runtime is more than just nodejs/zmq, it is a
+full fledged linux distribution. This gives us many possibilities to actually
+run software not based on <code>nodejs</code>. The following are some of the possibilities:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Link to binary libraries</dt>
+<dd>
+<p>This is trivially achieved by including the binaries of those libraries in the
+code bundle. If they are to be used from within a nodejs-based program, the
+bridge lib should have been preferably compiled previously (on a linux
+environment like the one we supply), and included within the code bundle. This
+is a very simple variation on having a purely nodejs-based program.</p>
+</dd>
+<dt class="hdlist1">Include arbitrary executables</dt>
+<dd>
+<p>As we can include binary libraries to be used from within node, we can also
+include arbitrary binary executables within the code bundle. When doing so we
+only need to ensure that the software stack they require can be found within
+the environment. If any additional libraries are necessary, they should be
+included within the code bundle.</p>
+<div class="paragraph">
+<p>When taking this approach, from the <code>component</code> module we will launch a process
+executing the binary. In the simplest cases, the executable "communicates"
+only through the file system and standard i/o. In those cases, the standard
+nodejs api gives us all the tools we need to launch and pass data to and from
+the process launched.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Long-lived non-nodejs servers</dt>
+<dd>
+<p>In other cases, the program being launched is long-lived, probably
+containing most of the logic of the component, and needs to communicate
+with other roles in the service. Depending on the case, the launched
+process can simply coordinate actions with the <strong>component</strong> module using
+one of the standard communication mechanisms available on a Linux system:
+sockets (unix or ip), pipes&#8230;&#8203; Additionally, 0MQ can be used when the legacy
+code either uses it or easily adapts to using it.</p>
+<div class="paragraph">
+<p>This case can be supported by <strong><em>Kumori</em></strong> directly when runtimes for other language
+  environments are provided.</p>
+</div>
+</dd>
+<dt class="hdlist1">Legacy servers (even based on nodejs)</dt>
+<dd>
+<p>There will be cases when we just have legacy software, coded to interact
+through IP channels, whose code cannot be easily adapted to <strong><em>Kumori</em></strong>'s API.
+In this case <strong><em>Kumori</em></strong> itself provides support in terms of a <strong>proxy</strong> module
+available in the NATIVE runtime. The component needs to be properly defined
+according to the elements of the service model presented earlier (channels,
+settings,&#8230;&#8203;), and the code needs to be bundled properly. However, the
+<strong>component</strong> module only plays a simple <strong>adaptation</strong> role: it makes use of an
+appropriate <strong><em>Kumori</em></strong> <strong>proxy</strong> module to handle communications duties, and
+launches the legacy server, properly configured. In the sections that follow
+we provide details on how to proceed on these cases.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="s-legacy-web"><a class="anchor" href="#s-legacy-web"></a>7.1. Legacy web server support</h3>
+<div class="paragraph">
+<p>If we happen to have a web server that we cannot adapt to our environment, using
+directly the <strong>httpMessage</strong> module to interact directly through a SEP, we can
+still use that server untouched by using a mixed approach.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Use the <strong>component</strong> module as an adapter to launch the web server configured
+from the settings of the component, and to wait for connections on
+<code>localhost:80</code></p>
+</li>
+<li>
+<p>Let the <strong>component</strong> use the <strong>httpMessage</strong> module as explained in
+<a href="#s-httpsupport">HTTP support in <strong><em>Kumori</em></strong></a>, obtaining a <code>server</code> object connected to a channel.</p>
+</li>
+<li>
+<p>Use the <strong>httpProxy</strong> module available in <strong><em>Kumori</em></strong> repositories to establish
+a very light proxy to <code>localhost:80</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Following with our earlier example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee"># my-component.coffee
+#
+Component   = require 'component'
+http        = require 'http-message'
+httpProxy   = require 'http-message-proxy'     <i class="conum" data-value="1"></i><b>(1)</b>
+child       = require 'child-process'          <i class="conum" data-value="2"></i><b>(2)</b>
+
+module.exports = class MyComponent extends Component
+  ...
+  run: () -&gt;
+    [command,parameters] = @computeServerParameters() <i class="conum" data-value="3"></i><b>(3)</b>
+    child.spawn command, parameters                   <i class="conum" data-value="4"></i><b>(4)</b>
+    channel = @offerings[name]
+    server  = http.createServer()
+    server.listen channel
+    httpProxy server, 'localhost', 80                 <i class="conum" data-value="5"></i><b>(5)</b>
+    httpProxy.on 'error', (err) =&gt; ...                <i class="conum" data-value="6"></i><b>(6)</b>
+    ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We need the <code>httpProxy</code> module provided by <strong><em>Kumori</em></strong>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>In addition, we also use the <code>child_process</code> module, to launch the actual
+server process.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Assuming we have a <code>computeServerParameters</code> method, execute it to find
+the server executable name and the parameters it should be started with.
+We assume it has access to the configuration of the component.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Launch the actual server. We should make this more sophisticated to enable
+sensical ping production.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Start the httpProxy. From now on, HTTP goes directly to the legacy server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>httpProxy is an event emitter; it only emits <em>error</em> events.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adapting_legacy_servers_the_tcp_proxy_facility"><a class="anchor" href="#_adapting_legacy_servers_the_tcp_proxy_facility"></a>7.2. Adapting Legacy servers: the TCP proxy facility</h3>
+<div class="paragraph">
+<p>In the previous section we showed the special case of adapting an existing web
+server. In general, we may have situations in which a component functionality
+is actually provided by an existing server program, expecting access to IP
+networks, and such that it is either costly, impractical or outright impossible
+to carry out any sort of change in their code.</p>
+</div>
+<div class="paragraph">
+<p>As was the case of a web server, the component should be properly specified,
+with the channels that make sense to how it is to be connected, and
+the configuration needed for semantically consistent set up of the legacy server.</p>
+</div>
+<div class="paragraph">
+<p>Besides this configuration, however, we will need a way to convert the IP-based
+configuration directly supported by the legacy server to interact with
+other roles within the deployed service.</p>
+</div>
+<div class="paragraph">
+<p>Just as in the case of the web server, the approach will require the component
+module to act as an adapter, launching the legacy server to interact with the
+<code>localhost</code> network interface, through adequate network ports.</p>
+</div>
+<div class="paragraph">
+<p>Unlike the case of the legacy web server, we now can have an arbitrary protocol
+being spoken by the legacy server, thus we need a "neutral" solution. For
+this case <strong><em>Kumori</em></strong> provides a <strong>proxy-tcp</strong> module that can be used by the
+adapter/component to tunnel IP protocols through <strong><em>Kumori</em></strong> channels transparently
+to the legacy server code.</p>
+</div>
+<div class="paragraph">
+<p>Unlike the approach in <a href="#s-legacy-web">Legacy web server support</a>, the channel protocol knows nothing
+about the higher level protocol supported by the server, limiting itself to ship
+the bytes being pushed back and forth by legacy pieces of software.</p>
+</div>
+<div class="paragraph">
+<p>The following shows an example of how to generally set up this kind of legacy
+support.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee"># my-component.coffee
+#
+Component   = require 'component'
+ProxyTcp    = require('proxy-tcp').ProxyTcp         <i class="conum" data-value="1"></i><b>(1)</b>
+child       = require 'child-process'
+
+module.exports = class MyComponent extends Component
+  ...
+  run: () -&gt;
+    [server, parameters, channels] = @computeServerParametersAndChannels() <i class="conum" data-value="2"></i><b>(2)</b>
+
+    @proxy = new ProxyTcp @iid, @role, channels      <i class="conum" data-value="3"></i><b>(3)</b>
+
+    @proxy.on 'ready', (@bindIp) =&gt;                  <i class="conum" data-value="4"></i><b>(4)</b>
+      @startLegacyServer server, bindIp, parameters
+
+    @proxy.on 'error', (err) =&gt;                      <i class="conum" data-value="5"></i><b>(5)</b>
+      @processProxyError err
+
+    @proxy.on 'change', (data) =&gt;                    <i class="conum" data-value="6"></i><b>(6)</b>
+      @reconfigLegacyServer server, bindIp, parameters, data
+
+    @proxy.on 'close', () =&gt;                         <i class="conum" data-value="7"></i><b>(7)</b>
+      @stopLegacyServer server, parameters
+
+  shutdown: -&gt;
+    @proxy.shutdown()                                <i class="conum" data-value="8"></i><b>(8)</b>
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We now require the generic <strong>proxy-tcp</strong> module.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Assuming method <strong>computeServerParametersAndChannels</strong> returns as in
+<a href="#s-legacy-web">Legacy web server support</a> the server program and parameters to pass to it. But,
+in addition, it returns an object relating the component&#8217;s channels to the
+legacy server ports/connections/bindings.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><strong>ProxyTcp</strong> object initialization requires the role and ID of the instance,
+and the list of channels (with additional information) to be proxied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><strong>ProxyTcp</strong> object issues an event when it is ready to process requests,
+providing the local IP address to be assigned to the legacy server.
+For <strong>proxy-tcp</strong> to function properly, legacy server must be bound to that
+IP.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><strong>ProxyTcp</strong> object issues an event when an error occurs.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><strong>ProxyTcp</strong> object issues an event, during its life cycle, when any change
+occurs that should result in a reconfiguration of the legacy server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><strong>ProxyTcp</strong> object issues an event when it&#8217;s closed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><strong>ProxyTcp</strong> object finalization.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>While method <strong>computeServerParameters</strong> is straightforward to write, needing only
+to know how to start the legacy server, writing method
+<strong>computeServerParametersAndChannels</strong> will require knowing how to configure
+the <strong>ProxyTcp</strong> object too.</p>
+</div>
+<div class="sect3">
+<h4 id="_configuring_the_proxytcp_object"><a class="anchor" href="#_configuring_the_proxytcp_object"></a>7.2.1. Configuring the ProxyTcp object</h4>
+<div class="paragraph">
+<p><strong>ProxyTcp</strong> object initialization requires an object relating the component&#8217;s
+channels to the legacy server ports/connections/bindings.</p>
+</div>
+<div class="paragraph">
+<p>This object is a dictionary whose key is the channel name, and values contains:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A reference to the channel object</p>
+</li>
+<li>
+<p>TCP port to be proxied</p>
+</li>
+<li>
+<p>In case of duplex channels, its operating mode (bind/connect)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example configuration for a <strong>ProxyTcp</strong> that proxies four channels:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  'myDuplex1': {
+    channel: myDuplex1,
+    port: 9100,
+    mode: 'bind'
+  },
+  'myDuplex2': {
+    channel: myDuplex2,
+    port: 9100,
+    mode: 'connect'
+  },
+  'myRequest3': {
+    channel: myRequest3,
+    port: 9200
+  },
+  'myReply4': {
+    channel: myReply4,
+    port: 9200
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ready_event"><a class="anchor" href="#_ready_event"></a>7.2.2. Ready event</h4>
+<div class="paragraph">
+<p>When <strong>Proxy</strong> object is ready to process requests, a <em>ready</em> event is emitted,</p>
+</div>
+<div class="paragraph">
+<p>Data associated with this event is the local IP address to be used by the
+legacy server.</p>
+</div>
+<div class="paragraph">
+<p>Typically, this IP address is used when starting the legacy server with
+duplex/bind or a reply channels.
+Typically, this information is not used with duplex/connect or a request
+channels.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@proxy.on 'ready', (bindIp) =&gt;
+  @_startLegacyServer bindIp, ...</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_error_event"><a class="anchor" href="#_error_event"></a>7.2.3. Error event</h4>
+<div class="paragraph">
+<p><strong>ProxyTcp</strong> object can issue error events, basically during the creation of
+internal connections initializing the proxy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@proxy.on 'error', (err) =&gt;
+  ...</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_change_event"><a class="anchor" href="#_change_event"></a>7.2.4. Change event</h4>
+<div class="paragraph">
+<p>During its life cycle, <strong>ProxyTcp</strong> object emits <code>change</code> events when any change
+occurs, which may result in a reconfiguration of the legacy server.</p>
+</div>
+<div class="paragraph">
+<p>Data associated with this event will vary depending on the channel that caused
+it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">@proxy.on 'change', (data) -&gt;
+  @reconfigLegacyServer server, bindIp, parameters, data</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Request</dt>
+<dd>
+<p>When a request channel is proxied, a TCP port is opened in a local IP address.
+A <code>change</code> event is issued when <strong>ProxyTcp</strong> is ready and listening on this
+port. An event is issued too, when the port is closed (this happens when the
+instance is shutting down, so usually an action on the legacy server is not
+required). Event data contains parameters that legacy server could need to be
+reconfigured:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Listening (true/false)</p>
+</li>
+<li>
+<p>Channel name</p>
+</li>
+<li>
+<p>IP</p>
+</li>
+<li>
+<p>Port</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">{
+  channel: 'myRequest3',
+  listening: true,
+  ip: ip:'127.0.0.7',
+  port: 9300
+}</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Reply</dt>
+<dd>
+<p>Never issues <code>change</code> events.</p>
+</dd>
+<dt class="hdlist1">Duplex</dt>
+<dd>
+<p>When the set of instances attached to the <em>complete</em> connector (duplex
+channels) changes, <strong>ProxyTcp</strong> issues a <code>change</code> event.
+Event data is a list of current members with the information that the legacy
+server could need to be reconfigured:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Channel name</p>
+</li>
+<li>
+<p>Instance ID</p>
+</li>
+<li>
+<p>IP</p>
+</li>
+<li>
+<p>Port</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">{
+  channel: 'myDuplex1',
+  members: [
+    {iid:'A_10', ip:'127.0.0.7', port:9100},
+    {iid:'A_11', ip:'127.0.0.8', port:9100},
+    {iid:'A_12', ip:'127.0.0.9', port:9100}
+  ]
+]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_close_event"><a class="anchor" href="#_close_event"></a>7.2.5. Close event</h4>
+<div class="paragraph">
+<p>After <strong>ProxyTcp.shutdown()</strong> method is invoked, a <em>close</em> event is emitted when
+operation is finished.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-coffee" data-lang="coffee">@proxy.on 'close', () =&gt;
+  ...</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_general_service_programming_tips"><a class="anchor" href="#_general_service_programming_tips"></a>8. General service programming tips</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Writing software for a cloud service with elasticity in mind is a bit different
+from other software-writing activities.</p>
+</div>
+<div class="paragraph">
+<p>A service typically accumulates state over time that is relevant to how it
+behaves when requests arrive. That is one reason why failures in any part of the
+service that wipe out state may have critical consequences to the service
+functionality.</p>
+</div>
+<div class="paragraph">
+<p>But wiping the state is not the worst that may happen to it. Some failures may
+leave the state of a store in such a shape that it cannot be accessed without
+fixing it. File systems, for instance, are prone to this kind of trouble: if the
+file system has been changed, but the metadata does not properly reflect those
+changes, the state of the file system metadata is inconsistent, and no normal
+use can be resumed. A similar situation can happen if other stores are involved.</p>
+</div>
+<div class="paragraph">
+<p>Failures are not either the only source of trouble with state in services.
+Services must ensure a proper level of performance is achieved while in
+operation, and this must often be achieved by replicating components, or, using
+<strong><em>Kumori</em></strong>'s verbiage, by creating several instances of components.</p>
+</div>
+<div class="paragraph">
+<p>In many cases, the set of instances must act transparently as one. That is, its
+clients do not know anything about the replication, nor care about it: they just
+want to receive the service&#8230;&#8203; However, to achieve this degree of transparency
+it is necessary to ensure that whatever state changes the client may infer from
+the server are properly propagated among the set of replicas, or clients do not
+change of replica during a <em>stateful</em> session (stickyness).</p>
+</div>
+<div class="paragraph">
+<p>Service application programmers must be aware of this issues and take proper
+steps to ensure service state handling fits the purported intent of the service.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_state_sharing_scenario_handling_sessions"><a class="anchor" href="#_a_state_sharing_scenario_handling_sessions"></a>8.1. A state sharing scenario: handling sessions</h3>
+<div class="paragraph">
+<p>As mentioned above, one problem with replication is sharing state among the
+replicas. One of the best known examples is the case of session state in web
+applications when several replicas of the server are created.</p>
+</div>
+<div class="paragraph">
+<p>In this case a simple solution, requiring minimal effort is to have a component
+holding the shared state, and connect the web server component with this
+session state component. This is what we showed in our example service presented
+in an earlier section.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_state_and_persistence"><a class="anchor" href="#_state_and_persistence"></a>8.2. State and persistence</h3>
+<div class="paragraph">
+<p>Programmers used to write desktop, or even typical server programs usually think
+of the underlying file system as a durable store. This illusion is actually
+maintained through replication: a backup system helps ensure a degree of
+durability deemed sufficient in many cases. When circumstances demand stronger
+guarantees, the replication is actually carried out at the file system layer,
+ensuring that write requests, when carried out, are properly replicated.</p>
+</div>
+<div class="paragraph">
+<p>When programming for a cloud environment these expectations must be carefully
+checked, to avoid making disastrous mistakes. A typical virtualized environment
+from one of the available IaaS provides compute VMs attached to some sort of
+volume in which a file system is available. While the VM exists, everything may
+behave as usual, and a program written for a classical server environment
+keeps on behaving properly. However, taking down the VM without any other action,
+may ensure that all the state of that VM is lost. One way in which a VM can
+be taken down is due to failures in the hardware itself, rendering a node in
+a data center useless, and the data stored in its disks unreachable.</p>
+</div>
+<div class="paragraph">
+<p>Failures are to be expected in a data center environment, and a service
+programmer MUST code for failures. This means that if a service wants to
+guarantee some level of availability, it must code understanding that failures
+can wipe out data stored in a local volume.</p>
+</div>
+<div class="sect3">
+<h4 id="_instantiation_and_component_replicas"><a class="anchor" href="#_instantiation_and_component_replicas"></a>8.2.1. Instantiation and component replicas</h4>
+<div class="paragraph">
+<p>In <strong><em>Kumori</em></strong> component instances are created anew on initial service launch, and
+on reconfigurations, when more instances are needed to sustain the load of the
+service without sacrificing performance.</p>
+</div>
+<div class="paragraph">
+<p>Earlier on we described the instantiation process. From it, each component
+instance has access to a default low performance volatile volume to store their
+working data. What volatile means in <strong><em>Kumori</em></strong> is that the data stored in them
+will be lost if any kind of failure (be it accidental or induced by operator
+actions) takes down the instance: the system is not going to take exceptional
+measures to protect its contents.</p>
+</div>
+<div class="paragraph">
+<p>To avoid this, in <strong><em>Kumori</em></strong> we can take one of the following approaches.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_durability_volatile_volumes"><a class="anchor" href="#_state_durability_volatile_volumes"></a>8.2.2. State durability: volatile volumes</h4>
+<div class="paragraph">
+<p>Component developers may request volumes with a durability higher than the one
+provided by the default volume made available to every instance.</p>
+</div>
+<div class="paragraph">
+<p>A Component&#8217;s specification can request a more durable volume from <strong><em>Kumori</em></strong>.
+Besides the pure volatile volume we explained above, a component may request
+a volatile volume with a <em>best effort</em> level of guarantee. What this means
+is that in the case an instance fails, when <strong><em>Kumori</em></strong> goes to recover it, it
+tries to do so on the same node it was executing before the failure, and with
+the same volatile volume. This way, the previous state can be accessed by the
+new instance incarnation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_durability_persistent_volumes"><a class="anchor" href="#_state_durability_persistent_volumes"></a>8.2.3. State durability: persistent volumes</h4>
+<div class="paragraph">
+<p>Finally, a component can request a <em>persistent</em> volume resource. Such volumes
+are provided by a <strong><em>Kumori</em></strong> built-in service, operating as a distributed
+partition service with triple redundancy, exposing those volumes with a well
+established network-based volume access protocol (transparent beneath <strong><em>Kumori</em></strong>).
+Changes to the volume are carried out before acknowledged, ensuring their
+durability without any extra work on the part of the component coder.</p>
+</div>
+<div class="paragraph">
+<p>Typical implementations of <em>persistent</em> volumes do not allow them being mounted
+on more than one replica, thus, when a component gets this type of volume, it
+will get only one replica. In case of replica failure, the volume is made
+available to the recovered replica.</p>
+</div>
+<div class="paragraph">
+<p>This is the most expensive kind of volume, and the one with a potentially larger
+hit on performance, as ensuring durability with the needed underlying redundancy
+at the block level has its price.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_durability_external_services"><a class="anchor" href="#_state_durability_external_services"></a>8.2.4. State durability: external services</h4>
+<div class="paragraph">
+<p>We can rely on an external store service for durability. The approaches will
+vary depending on the type of external store.</p>
+</div>
+<div class="paragraph">
+<p>Blob stores can be used in a very simple way using an approach like this: before
+an instance starts doing useful work, it accesses the blob store, and brings a
+blob containing its initial state.</p>
+</div>
+<div class="paragraph">
+<p>When a shutdown is programmed, the changes in the state are shipped to the
+external blob store service.</p>
+</div>
+<div class="paragraph">
+<p>In the event of an non-programmed failure, all changes would be lost, as nobody
+will care about shipping the altered state to any external store.</p>
+</div>
+<div class="paragraph">
+<p>To avoid this total loss, partial changes can be shipped periodically to this
+external service.</p>
+</div>
+<div class="paragraph">
+<p>In the case the external service is some sort of database, the interaction with
+it will typically based on some sort of transaction notion. Thus, state changes
+needing durability will not be commited before the database actually commits
+them.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_failures"><a class="anchor" href="#_failures"></a>8.3. Failures</h3>
+<div class="paragraph">
+<p>Besides interfering with the state of a service, failures actually can take down
+the service itself.</p>
+</div>
+<div class="paragraph">
+<p>Replication comes to the rescue again: ensuring that more than one instance of
+critical components exists can help guarantee the whole service keeps on working
+despite failures, without any detectable loss of service continuity.</p>
+</div>
+<div class="paragraph">
+<p>However, all the replication in the world can still be useless if no attention
+is being payed to the correlation of failures. That is, many different instance
+failures may be caused by the same event, thus being correlated by it. If the
+event is sufficiently likely, having all replicas in those instances is useless
+from the point of view of guaranteeing service continuity.</p>
+</div>
+<div class="paragraph">
+<p>As we do not expect service writers to understand the many different failure
+modes a PaaS may suffer, <strong><em>Kumori</em></strong> provides a high level approach to this. It
+allows each component to specify the degree of <em>resilience</em> it should get, and
+this is expressed as a basic resource of a component, with an integer value
+indicating how many failures (of a sufficiently likely kind) should be needed to
+fully wipe out all instances of the component. The default is 1.</p>
+</div>
+<div class="paragraph">
+<p>Currently <strong><em>Kumori</em></strong>'s implementation considers only one kind of abstract failure
+(the "sufficiently likely kind"). In the future it may be useful to actually
+specify more levels of failure for this resource parameter.</p>
+</div>
+<div class="paragraph">
+<p>Note that values of the <em>resilience</em> resource higher than 1 will always require
+several instances of the component to be up concurrently.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-advanced-devel"><a class="anchor" href="#s-advanced-devel"></a>9. Advanced component development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_defining_runtimes"><a class="anchor" href="#_defining_runtimes"></a>9.1. Defining runtimes</h3>
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> provides a set of predefined runtimes that can be used to run
+application code directly on them. Additionally, it is also possible to create
+new custom runtimes by extending them.</p>
+</div>
+<div class="paragraph">
+<p>Typically, a runtime is the combination of an Operating System that meets
+<strong><em>Kumori</em></strong>'s requirements and a software stack available to the application code.
+For example, <strong><em>Kumori</em></strong>'s NATIVE runtime referred to earlier on is currently based
+on Ubuntu OS, with a basic software stack installed on top of it, mainly
+"<code>nodejs</code>", 0MQ and some <strong><em>Kumori</em></strong> platform libraries.</p>
+</div>
+<div class="paragraph">
+<p>If application code needs additional software libraries to run, and it is not
+feasible or it is very inconvenient to bundle them with the code of the
+component, a new custom runtime can be defined by taking an existing runtime as
+a base, and extending it by installing any required software. The new runtime
+will be registered in <strong><em>Kumori</em></strong>, and the application configured to be run with
+it.</p>
+</div>
+<div class="paragraph">
+<p>This course of action is also advised when many different components need a set
+of libraries, binaries or nodejs modules beyond what is provided in the native
+runtime.</p>
+</div>
+<div class="paragraph">
+<p>Runtimes are maintained by <strong><em>Kumori</em></strong> as Docker image blobs. Thus, the general
+procedure to define a runtime will be to extend an existing one, following these
+steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose a base runtime from <strong><em>Kumori</em></strong>'s runtimes repository.</p>
+</li>
+<li>
+<p>Download the runtime bundle for the chosen runtime. This bundle will include
+a docker image that can be extended.</p>
+</li>
+<li>
+<p>Import the base runtime image to a suitable Docker repository (usually on the
+developer&#8217;s machine)</p>
+</li>
+<li>
+<p>Customize the image via one of these methods:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dockerfile: building a new Docker image derived from the base, or</p>
+</li>
+<li>
+<p>Manually: creating a Docker container from the imported image, installing any
+desired software on it and committing the container to a new Docker image</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a manifest for the new runtime</p>
+</li>
+<li>
+<p>Generate a runtime bundle with the help of <strong><em>Kumori</em></strong>'s runtime generation tool</p>
+</li>
+<li>
+<p>Register the new runtime bundle on <strong><em>Kumori</em></strong> platform</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A runtime generation tool is available as a part of <strong><em>Kumori</em></strong>'s toolbox, to
+facilitate the handling of Docker images and exporting only the necessary layers
+to the runtime bundle to be registered.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that derived runtimes, even from the NATIVE runtime, can alter
+significantly the initialization sequence and the way <strong><em>Kumori</em></strong> services and API
+are made available to components running under the new runtime. It will be
+necessary to document and inform about those aspects in case alterations are
+introduced.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples"><a class="anchor" href="#_examples"></a>9.2. Examples</h3>
+<div class="paragraph">
+<p>The manifest of a custom runtime that derived from the NATIVE runtime, with the
+addition of library <em>XYZ</em> to the software stack, could look as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/runtime/1_0_0",
+  "name": "eslap://some.domain/runtime/nodejs-libxyz/1_0_0",
+  "derived" : {
+    "from" : "eslap://eslap.cloud/runtime/native/1_0_0"
+  },
+  "sourcedir": "/eslap/component",
+  "entrypoint": "/eslap/runtime-agent/scripts/start-runtime-agent.sh",
+  "metadata": {
+    "description": "My custom runtime",
+    "os_name": "Ubuntu",
+    "os_version": "14.04",
+    "os_release": "Trusty Tahr",
+    "software": {
+      "libxyz": {
+        "version": "1.2.3"
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using <strong><em>Kumori</em></strong> toolbox, it is straightforward to retrieve an existing runtime
+for extending it. For the runtime defined in the above manifest, the Docker
+image can be installed locally by running:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/home/user/kumori-sdk/tools/runtime-tool.sh install -n eslap://eslap.cloud/runtime/native/1_0_0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the command finishes, a Docker image called
+<code>eslap.cloud/runtime/native:1_0_0</code> should be available in the local Docker,
+which can then be extended.</p>
+</div>
+<div class="sect3">
+<h4 id="_image_extension_via_dockerfile"><a class="anchor" href="#_image_extension_via_dockerfile"></a>9.2.1. Image extension via Dockerfile</h4>
+<div class="paragraph">
+<p>Assuming that the only additional software library needed by the component is
+<code>libxyz</code>, the base runtime can be extended with a simple Dockerfile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>FROM eslap.cloud/runtime/native:1_0_0
+
+MAINTAINER MyCompany Ltd. &lt;maintainer@my.company&gt;
+
+RUN apt-get update &amp;&amp; apt-get install libxyz</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A new Docker image can the be built from the Dockerfile, by running this command
+from the Dockerfile directory:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>docker build -t some.domain/runtime/nodejs-libxyz:1_0_0 .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All standard Docker image building options and commands can be used in the
+extension process.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_image_extension_via_container_commit"><a class="anchor" href="#_image_extension_via_container_commit"></a>9.2.2. Image extension via container commit</h4>
+<div class="paragraph">
+<p>Alternatively, a runtime image can be extended by running a container from the
+base image, installing the software from the inside and then committing the
+container state to a new Docker image.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This extension mechanism requires the base image to have a linux stack
+installed, to be able to run commands on it. For example, BARE runtime can&#8217;t be
+extended via container commit.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ docker run --entrypoint /bin/bash -it eslap.cloud/runtime/native:1_0_0
+
+root@332cf02b5e10:/#                             # INSIDE THE NEW CONTAINER
+root@332cf02b5e10:/# apt-get install libxyz
+  [...]
+root@332cf02b5e10:/# exit                        # EXITING THE NEW CONTAINER
+
+$ docker commit -m 'Kumori NATIVE runtime customization' -a 'maintainer' 332cf02b5e10 some.domain/runtime/nodejs-custom-libxyz:1_0_0</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_runtime_bundle_generation"><a class="anchor" href="#_runtime_bundle_generation"></a>9.3. Runtime bundle generation</h3>
+<div class="paragraph">
+<p>Once the image for the new custom runtime is ready locally, it must be exported,
+processed and packed in a bundle, along with its manifest, so it&#8217;s ready to
+register on <strong><em>Kumori</em></strong>. This process is carried out with the help of the
+<code>runtime-tool</code> of the SDK:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/home/user/kumori-sdk/tools/runtime-tool.sh bundle -i some.domain/runtime/nodejs-libxyz:1_0_0 -m Manifest.json</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Local image tags will be ignored and only used to locate the image, since
+the generated bundle will contain a properly tagged Docker image matching the
+runtime name specified in the runtime manifest, as expected by <strong><em>Kumori</em></strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This will result in a zip bundle file as expected by <strong><em>Kumori</em></strong>'s admission
+service.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-ip-balancing"><a class="anchor" href="#s-ip-balancing"></a>Appendix A: Balancing incoming IP requests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong><em>Kumori</em></strong> can handle requests to the same service coming to different IP
+addresses. This ability can be leveraged to load balance arriving requests
+through the usual method of registering multiple IPs for the same domain, and
+leaving the decision of which particular IP to contact to the client of the DNS
+service.</p>
+</div>
+<div class="paragraph">
+<p>A second level balancing is performed the SEP component. When a SEP gets
+requests it will balance them among all the service instances connected to it,
+although stickiness is maintained.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="s-resource-units-definition"><a class="anchor" href="#s-resource-units-definition"></a>Appendix B: Resource units definition and implications</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__cpu</dt>
+<dd>
+<p>Each CPU unit corresponds to the raw compute power of an Intel Avoton C2750
+CPU core or equivalent.<br>
+This compute power is usable across all CPU cores available to the instance
+so that the usage is not limited to a restricted set of them, although all
+the compute power could be available in a single core depending on
+<code>threadability</code> value. This approach allows a better resource exploitation by
+multithreaded applications.<br>
+For example, a hypothetic instance that happens to be deployed in a node with
+8 CPU cores, each of them twice as powerful as Intel Avoton ones, with a
+single CPU unit assigned to it, will be able to use at the same time:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>50% of 1 core</p>
+</li>
+<li>
+<p>25% of 2 cores</p>
+</li>
+<li>
+<p>10% of a core, 25% of a second one, and 15% of a third one</p>
+</li>
+<li>
+<p>&#8230;&#8203;or any other combination that sums 50% of a core.<br></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As would be expected, if the requested amount of CPU units is not enough
+for a component, it is possible that it won&#8217;t be capable of processing requests
+on a timely basis, so the application will run slow. Conversely, a very high
+value will probably result in unused resources.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__memory</dt>
+<dd>
+<p>Each memory unit guarantees 256MB of physical RAM plus a fraction of that
+value of swap. The swap fraction might change in the future, and is currently
+set to 1/2, that is 128MB.<br></p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Linux kernel will kill processes trying to exceed this limit.
+Therefore, the chosen value must be enough for the component processes to start
+and run in normal operation. Higher than needed values will result in unused
+resources.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+As a recommendation, swap memory should not be accounted when deciding
+how many memory units have to be requested for a component. Instead, its use
+should be reserved for sudden increases of memory usage, so to avoid processes
+being killed.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__ioperf</dt>
+<dd>
+<p>Each IOperf unit corresponds to 25MB/s disk bandwidth rate and 50 IOPS.<br>
+<strong>The way disk performance is configured is temporary, and will be improved in
+future releases of the platform.</strong><br></p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A single IOperf unit should be enough for most applications. Only in case
+of observing high <code>iowait</code> (time spent by the CPU waiting, i.e. doing nothing,
+for I/O operations to complete) values, it is advisable to request more IOperf
+units.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameter_types"><a class="anchor" href="#_parameter_types"></a>Appendix C: Parameter types</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_boolean"><a class="anchor" href="#_boolean"></a>C.1. Boolean</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/boolean/1_0_0",
+  "typespec" : {
+    "type" : "boolean"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integer"><a class="anchor" href="#_integer"></a>C.2. Integer</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/integer/1_0_0",
+  "typespec" : {
+    "type" : "integer"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_json"><a class="anchor" href="#_json"></a>C.3. JSON</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/json/1_0_0",
+  "typespec" : {
+    "type" : "object"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_list"><a class="anchor" href="#_list"></a>C.4. List</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/list/1_0_0",
+  "typespec" : {
+    "type" : "array"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_number"><a class="anchor" href="#_number"></a>C.5. Number</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/number/1_0_0",
+  "typespec" : {
+    "type" : "number"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_string"><a class="anchor" href="#_string"></a>C.6. String</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/string/1_0_0",
+  "typespec" : {
+    "type" : "string"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vhost"><a class="anchor" href="#_vhost"></a>C.7. VHost</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "name": "eslap://eslap.cloud/parameter/vhost/1_0_0",
+  "typespec" : {
+    "type" : "object",
+    "properties" : {
+      "domain" : {"type" : "string"},
+      "port"   : {"type" : "integer"}
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_predefined_runtimes"><a class="anchor" href="#_predefined_runtimes"></a>Appendix D: Predefined runtimes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_bare"><a class="anchor" href="#_bare"></a>D.1. Bare</h3>
+<div class="paragraph">
+<p>The Bare runtime contains no base OS.
+It is provided for users to derive other runtimes from it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/runtime/1_0_0",
+  "name": "eslap://eslap.cloud/runtime/bare/1_0_0",
+  "agent": "eslap://eslap.cloud/runtime-agent/1_0_0",
+  "codedir" : "/eslap/component",
+  "entrypoint" : "/eslap/runtime-agent/scripts/start-runtime-agent.sh",
+  "metadata" : {
+    "description" : "ECloud Bare Runtime (no base OS)",
+    "os_name" : "",
+    "os_version" : "",
+    "os_release" : "",
+    "software" : {
+      "ecloud-runtime-agent" : {
+        "version" : "1.0.0"
+      },
+      "nodejs" : {
+        "version" : "4.3.2"
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_alpine"><a class="anchor" href="#_alpine"></a>D.2. Alpine</h3>
+<div class="paragraph">
+<p>Alpine Linux 3.3 based runtime with preconfigured code and entrypoint.
+This is an alternative runtime used to execute native components.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/runtime/1_0_0",
+  "name": "eslap://eslap.cloud/runtime/alpine/1_0_1",
+  "agent": "eslap://eslap.cloud/runtime-agent/1_0_0",
+  "sourcedir": "/eslap/component",
+  "entrypoint": "/eslap/runtime-agent/scripts/start-runtime-agent.sh",
+  "metadata": {
+    "description": "ECloud Alpine Linux 3.3",
+    "os_name": "Alpine Linux",
+    "os_version": "v3.3",
+    "os_release": "stable",
+    "software": {
+      "ecloud-runtime-agent": {
+        "version": "1.0.0"
+      },
+      "openssh-client": {
+        "version": "7.2p2"
+      },
+      "nodejs": {
+        "version": "4.3.0"
+      },
+      "zeromq": {
+        "version": "4.1.3"
+      },
+      "libsodium": {
+        "version": "1.0.7"
+      }
+    },
+    "layerId": "745201b861b7944a4276f42c58a4c663aa7b053d49ca2aefe0f85154693e0f29"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_native"><a class="anchor" href="#_native"></a>D.3. Native</h3>
+<div class="paragraph">
+<p>Ubuntu 16.04 based runtime with preconfigured code and entrypoint.
+This is the 1.1.x runtime series used to execute native components.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "spec": "http://eslap.cloud/manifest/runtime/1_0_0",
+  "name": "eslap://eslap.cloud/runtime/native/1_1_1",
+  "agent": "eslap://eslap.cloud/runtime-agent/1_0_0",
+  "sourcedir": "/eslap/component",
+  "entrypoint": "/eslap/runtime-agent/scripts/start-runtime-agent.sh",
+  "metadata": {
+    "description": "ECloud Ubuntu 16.04",
+    "os_name": "Ubuntu",
+    "os_version": "16.04",
+    "os_release": "Xenial Xerus",
+    "software": {
+      "ecloud-runtime-agent": {
+        "version": "1.0.0"
+      },
+      "openssh-client": {
+        "version": "7.2p2"
+      },
+      "nodejs": {
+        "version": "4.3.2"
+      },
+      "libzmq5": {
+        "version": "4.1.4"
+      },
+      "libsodium": {
+        "version": "1.0.8"
+      }
+    },
+    "layerId": "78896f55bb59121bf564490200820df4dd62e0b580a2af34b536f084da8eb3d2"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manifest_schemas"><a class="anchor" href="#_manifest_schemas"></a>Appendix E: Manifest schemas</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_blob"><a class="anchor" href="#_blob"></a>E.1. Blob</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/blob/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/element.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/blob/1_0_0"]
+      },
+      "name": {
+        "type": "string",
+        "description" : "Not a URI. Uniquenes requirements are within its containing bundle"
+      }
+    }
+  }],
+  "description" : "Blobs are not registered by themselves. They form part of an enclosing bundle"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_channel"><a class="anchor" href="#_channel"></a>E.2. Channel</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/channel/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/channel/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/channel.json"
+      }
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_component"><a class="anchor" href="#_component"></a>E.3. Component</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/component/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/component/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/component.json"
+      },
+      "runtime": {
+        "$ref": "http://eslap.cloud/schemas/uris/runtime.json"
+      },
+      "comfiguration": {
+        "$ref": "http://eslap.cloud/schemas/configuration.json"
+      },
+      "channels": {
+        "$ref": "http://eslap.cloud/schemas/channels.json"
+      },
+      "profile": {
+        "type": "object",
+        "properties": {
+          "threadability": {
+            "type": "string",
+            "pattern": "^((\\d+\\+?)|\\*)$"
+          }
+        }
+      }
+    },
+    "required": ["runtime", "channels"]
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connector"><a class="anchor" href="#_connector"></a>E.4. Connector</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/connector/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/connector/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/connector.json"
+      }
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deployment"><a class="anchor" href="#_deployment"></a>E.5. Deployment</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/deployment/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/element.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/deployment/1_0_0"]
+      },
+      "name" : {
+        "type": "string"
+      },
+      "servicename" : {"$ref" : "http://eslap.cloud/schemas/uris/service.json"},
+      "comfiguration": {
+        "type" : "object",
+        "properties" : {
+          "resources" : {
+            "type" : "object",
+            "additionalProperties" : {"$ref" : "http://eslap.cloud/schemas/uris/resource.json"}
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {"$ref" : "eslap://eslap.cloud/parameter/json/1_0_0"}
+          }
+        }
+      },
+      "roles" : {
+        "type" : "object",
+        "patternProperties" : {
+          "^\\w+$" : {
+            "type" : "object",
+            "properties" : {
+              "resources" : {
+                "type" : "object",
+                "patternProperties" : {
+                  "^__\\w+$" : {}
+                }
+              }
+            },
+            "required": ["resources"]
+          }
+        },
+        "additionalProperties" : true
+      }
+    },
+    "required": ["servicename", "roles"]
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parameter"><a class="anchor" href="#_parameter"></a>E.6. Parameter</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/parameter/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/parameter/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/parameter.json"
+      },
+      "typespec" : {"$ref" : "http://json-schema.org/schema"}
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_protocol"><a class="anchor" href="#_protocol"></a>E.7. Protocol</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/protocol/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/protocol/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/protocol.json"
+      },
+      "parent": {
+        "$ref": "http://eslap.cloud/schemas/uris/protocol.json"
+      }
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_resource"><a class="anchor" href="#_resource"></a>E.8. Resource</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/resource/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/resource/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/resource.json"
+      },
+      "parameters" : {"$ref" : "http://eslap.cloud/schemas/parameters.json"}
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_runtime"><a class="anchor" href="#_runtime"></a>E.9. Runtime</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/runtime/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/runtime/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/runtime.json"
+      },
+      "parent": {
+        "$ref": "http://eslap.cloud/schemas/uris/runtime.json",
+        "description" : "Parent runtime on which this one relies"
+      },
+      "codedir"    : {"type" : "string"},
+      "entrypoint" : {"type" : "string"},
+      "parameters": {
+        "$ref": "http://eslap.cloud/schemas/parameters.json"
+      }
+    }
+  }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_service_application"><a class="anchor" href="#_service_application"></a>E.10. Service Application</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://eslap.cloud/manifest/service/1_0_0",
+  "allOf": [{
+    "$ref": "http://eslap.cloud/schemas/namedelement.json"
+  }, {
+    "properties": {
+      "spec": {
+        "enum": ["http://eslap.cloud/manifest/service/1_0_0"]
+      },
+      "name": {
+        "$ref": "http://eslap.cloud/schemas/uris/service.json"
+      },
+      "comfiguration": {
+        "$ref": "http://eslap.cloud/schemas/configuration.json"
+      },
+      "channels": {
+        "$ref": "http://eslap.cloud/schemas/channels.json"
+      },
+      "roles" : {
+        "type" : "array",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {"type" : "string"},
+            "component" : {
+              "anyOf" : [
+                {"$ref" : "http://eslap.cloud/schemas/uris/component.json"},
+                {"$ref" : "http://eslap.cloud/schemas/uris/service.json"}
+              ]
+            },
+            "resources" : {
+              "type" : "object",
+              "additionalProperties" : {"type" : "string"},
+              "description" : "Simple maps from service resources to role resources"
+            },
+            "parameters" : {
+              "type" : "object",
+              "additionalProperties" : {"$ref" : "eslap://eslap.cloud/parameter/json/1_0_0"},
+              "description" : "Simple way to fix constant values for role parameters"
+            }
+          },
+          "required" : ["name","component"]
+        }
+      },
+      "connectors" : {
+        "type" : "array",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "type" : {"$ref" : "http://eslap.cloud/schemas/uris/connector.json"},
+            "depended" : {"$ref" : "#/definitions/endpoint_set"},
+            "provided" : {"$ref" : "#/definitions/endpoint_set"}
+          },
+          "required" : ["depended"]
+        }
+      }
+    },
+    "required": ["channels", "roles", "connectors"]
+  }],
+
+  "definitions" : {
+    "endpoint" : {
+      "type" : "object",
+      "properties" : {
+        "role" : {"type" : "string"},
+        "endpoint" : {"type" : "string"}
+      },
+      "required" : ["endpoint"],
+      "description" : "When no role is provided, the endpoint is the service's"
+    },
+    "endpoint_set" : {
+      "type" : "array",
+      "items" : {"$ref" : "#/definitions/endpoint"}
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-06-06 16:33:10 CEST
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>
