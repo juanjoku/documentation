@@ -1,3 +1,6 @@
+![Kumori Logo](assets/_kumori_logo_with_name_mini.png)
+![Kumori Logo](assets/_kumori_logo_with_name.png)
+
 # Kumori PaaS Documentation
 
 
@@ -41,7 +44,7 @@ Install it as a npm package
 
 This document describes the basic elements of Kumori PaaS, and guides the
 developer through the implementation and deployment of two example Node.js
-applications. +
+applications.
 
 For sure, this is *not* a complete manual or a full reference guide of Kumori
 PaaS. In fact, what we will show you here is only a small part of the full
@@ -53,7 +56,7 @@ or can be downloaded as a [PDF file here](02-quickstart-guide/README.pdf).
 
 ## Building Services for the Kumori PaaS
 
-Install it as a npm package
+
 
 ## Kumori CLI
 
