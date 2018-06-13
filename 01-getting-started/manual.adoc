@@ -36,6 +36,10 @@ follows.
 You will need https://www.docker.com/community-edition[docker] installed in
 your machine.
 
+WARNING: As stated in the Docker installation guide, to use Docker as a
+non-root user, you should add your user to the "docker" group with: +
+`sudo usermod -aG docker $USER`
+
 You also need http://nodejs.org[nodejs] 8.9 or later (with npm) to install and
 run the tools.
 
@@ -43,7 +47,7 @@ Then you can install Kumori CLI as follows:
 
 [source,shell]
 ----
-npm install -g @kumori/cli
+sudo npm install -g @kumori/cli
 ----
 
 === Simple express server
@@ -78,7 +82,7 @@ use to quickly implement simple service patterns. We make use of one of them:
 
 [source,shell]
 ----
-kumori component add -t express <name>
+kumori component add -t hello-world <name>
 ----
 
 This creates a component skeleton within the `components/<your_domain>/<name>`
@@ -129,11 +133,13 @@ kumori stamp update -t <token> baco
 kumori stamp use baco
 ----
 
+NOTE: `baco` is the current production version of Kumori PaaS.
+
 And now we can deploy like so:
 
 [source,shell]
 ----
-kumori deployment deploy <deployment_name>
+kumori deployment deploy <deployment_nickname>
 ----
 
 Which will return us an URL to browse the service we just deployed.
