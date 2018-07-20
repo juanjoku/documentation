@@ -1,5 +1,5 @@
 = Kumori PaaS - Getting Started
-Kumori Systems v1.0.0, June 2018
+Kumori Systems v1.0.1, July 2018
 :toc:
 :icons: font
 :toc-title: Table of Contents
@@ -82,45 +82,23 @@ use to quickly implement simple service patterns. We make use of one of them:
 
 [source,shell]
 ----
-kumori component add -t hello-world <name>
+kumori project add -t @kumori/workspace:project-hello-world <name>
 ----
 
-This creates a component skeleton within the `components/<your_domain>/<name>`
-directory, which we will leave untouched for this example. Note that the
-internal name this component will receive is
-`eslap://<your_domain>/component/<name>/0_0_1` (further details can be found in
-the https://github.com/kumori-systems/documentation[Building Services for the Kumori PaaS]
-guide).
+This populates your workspace with the Hello World example elements including:
 
-We now need to build the component:
+* A component skeleton within the `components/<your_domain>/<name>`
+  directory. Note that the internal name this component will receive is
+  `eslap://<your_domain>/component/<name>/0_0_1` (further details can be found
+  in the
+  https://github.com/kumori-systems/documentation[Building Services for the Kumori PaaS]
+  guide).
 
-[source,shell]
-----
-kumori component build <name>
-----
+* A service in `services/<your_domain>/<name>` folder. Also note that the
+  internal name of the created service app is
+  `eslap://<your_domain>/service/<name>/0_0_1`.
 
-A component must be inserted within a service application as one of its roles in order to be deployable.
-
-We create a service application making use of another template:
-
-[source,shell]
-----
-kumori service add -t hello-world <name>
-----
-
-Note that, currently, we should use the same *<name>* for the service application, as we used for the
-component. Future versions of the tool will provide more flexibility. Also note that the internal name
-of the created service app is `eslap://<your_domain>/service/<name>/0_0_1`.
-
-We are ready to prepare the deployment. Run the following command:
-
-[source,shell]
-----
-kumori deployment add <deployment_nickname> <name>
-----
-
-Where `<deployment_nickname>` is an arbitrary name you give your deployment, and
-`<name>` is the name you gave your service application.
+For this example, we can leave the component and service as they are.
 
 Before we can actually deploy, we need to configure our workspace with a valid API access token.
 This token can be obtained from https://dashboard.baco.kumori.cloud[Kumori Dashboard] - Settings page (three-dot menu at the top right).
@@ -130,7 +108,6 @@ With the token in our hands we use:
 [source,shell]
 ----
 kumori stamp update -t <token> baco
-kumori stamp use baco
 ----
 
 NOTE: `baco` is the current production version of Kumori PaaS.
@@ -139,9 +116,11 @@ And now we can deploy like so:
 
 [source,shell]
 ----
-kumori deployment deploy <deployment_nickname>
+kumori deployment deploy <name> -b -i
 ----
 
-Which will return us an URL to browse the service we just deployed.
+Which will return us an URL to browse the service we just deployed. The `-b` flag tells the CLI to compile the component before deploying the service. The `-i` flag is used to generate automatically an HTTP inbound with a random domain and link it to our service.
+
+NOTE: An HTTP inbound is a special service used to enable HTTP external access to other services. The inbounds must be paired to a domain which can be either generated automatically or manually set.
 
 To learn more, continue reading the Quick Start guide you can find in https://github.com/kumori-systems/documentation[this same repo].
